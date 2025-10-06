@@ -49,8 +49,4 @@ This project was developed by **Group One (Flutter Team)** as part of the **Batt
 **Special thanks to:**
 
 * **SecretStartups** – for organizing and inspiring innovation through the challenge.
-* **Tech Hut** – for providing mentorship, technical support, and resources that guided the development of BursaryConnect.
-
----
-
-Would you like me to add a **“Future Enhancements”** section next (e.g., eCitizen integration, AI-based eligibility matching, digital disbursement tracking)? It would make this overview look ready for pitching or funding.
+* **Tech Hut** – for providing mentorship, technical support, and resources that guided the development of BursaryConnect. 
