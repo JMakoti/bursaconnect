@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "107502416839",
+    "project_id": "bursaconnect",
+    "storage_bucket": "bursaconnect.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:107502416839:android:e0ac34a87d712aec4d1fe2",
+        "android_client_info": {
+          "package_name": "com.example.bursaconnect"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAZ67urIYy7I1JODVcOaojy_McvgBwnLZg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
