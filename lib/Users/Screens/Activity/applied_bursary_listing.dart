@@ -1,7 +1,6 @@
 import 'package:bursaconnect/Users/widgets/applied_bursary_tile.dart';
 import 'package:flutter/material.dart';
 import '../../../core/colors.dart'; // Adjust the path to where your colors.dart is located
-import '../../widgets/applied_bursary_tile.dart';
 import '../../Data/dummy_bursaries.dart';
 // import 'bursary_details.dart';
 
