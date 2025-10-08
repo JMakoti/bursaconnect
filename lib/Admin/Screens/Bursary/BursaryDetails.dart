@@ -7,161 +7,156 @@ class BursaryDetails extends StatefulWidget {
 }
 
 class _BursaryDetailsState extends State<BursaryDetails> {
-  int _selectedIndex = 0;
-  final List<String> _tabs = [
-   "Description",
-    "Terms & Condition",
-    "Benefits",
-    "Documents"
-  ];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: true,
-        title: Text("Scholarship Details"),
+        title: Text("County Government Bursary",
+        style: TextStyle(
+          fontSize: 18,
+        ),),
       ),
     body: SingleChildScrollView(
-      child: Column(
-        
-        children: [
-          Container(
-            height: 200,
-            width: 400,
-            decoration: BoxDecoration(
-      
-              borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(20),
-                topRight: Radius.circular(20),
-              )
-            ),
-            child: Column(
-              children: [
-                Image.network('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS1aQfvqcW7YmIYD0A6DlBNKM8NnFVHqUFMDQ&s',
-                width: 380,
-                height: 200,
-                fit: BoxFit.contain,)
-              ],
-            ),
-          ),
-          Container(
-            height: 570,
-            decoration: BoxDecoration(
-              color: Colors.grey.shade50,
-              borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(30),
-                topRight: Radius.circular(30)
-              )
-            ),
-            child: Column(
-              children: [
-                ListTile(
-                  leading: Icon(Icons.flag),
-                  title: Text("Kenya",
-                  style: TextStyle(
-                    fontSize: 15,
-                  ),
-                  ),
-                ),
-                ListTile(
-                  leading: Icon(Icons.school_outlined,),
-                  title: Text("Undergraduate",
-                    style: TextStyle(
-                      fontSize: 15,
-                    ),),
-                ),
-                ListTile(
-                  leading: Icon(Icons.calendar_today),
-                  title: Text("1st September - 30th september",
-                    style: TextStyle(
-                      fontSize: 15,
-                    ),),
-                ),
-                ListTile(
-                  leading: Icon(Icons.clean_hands_rounded),
-                  title: Text("Partial patnership",
-                    style: TextStyle(
-                      fontSize: 15,
-                    ),),
-                ),
-                SizedBox(
-                  height: 40,
-                  child: ListView.separated(
-                   scrollDirection: Axis.horizontal,
-                    itemCount: _tabs.length,
-                    separatorBuilder: (_, __) => const SizedBox(width: 10),
-                    itemBuilder: (context,index){
-                     final isSelected = _selectedIndex == index;
-                     return ChoiceChip(label: Text(
-                       _tabs[index],
-                       style: TextStyle(
-                         fontSize: 13,
-                         color: isSelected ? Colors.white : Colors.black87
-                       ),
-                     ),
-                         selected: isSelected,
-                       onSelected: (_){
-                       setState(() {
-                         _selectedIndex = index;
-                       });
-                       },
-                       selectedColor: Colors.blue,
-                       backgroundColor: Colors.grey.shade200,
-                       labelPadding: EdgeInsets.symmetric(horizontal: 10),
-                       shape: RoundedRectangleBorder(
-                         borderRadius: BorderRadius.circular(20),
-                       ),
-      
-                     );
-                    }
+      child: Padding(
+        padding: const EdgeInsets.all(10.0),
+        child: Column(
+         crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Card(
+              color: Color(0xFFF9FAFB),
+              child: Padding(
+                padding: const EdgeInsets.all(20.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    ListTile(
+                      leading: Container(
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(45),
+                          color: Colors.blue.shade100,
+                        ),
+
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Icon(Icons.school,
+                            color: Colors.blueAccent,),
+                        ),
+                      ),
+                      title: Text('County Government Bursary',
+                        style: TextStyle(
+                          fontWeight: FontWeight.w700,
+                        ),
+                      ),
+                      subtitle: Text("Mombasa County Government",
+                        style: TextStyle(
+                          color: Colors.grey.shade400,
+                        ),),
                     ),
+                    SizedBox(
+                      height: 1,
+                    ),
+                   ListTile(
+                     leading: Text("Category"),
+                     trailing:Text("Government",
+                     style: TextStyle(
+                       fontSize: 12,
+                     ),
+                     ),
+                   ),
+                    Divider(),
+                    ListTile(
+                      leading: Text("Level of Study"),
+                      trailing:Text("Secondary, tertiary",
+                        style: TextStyle(
+                          fontSize: 12,
+                        ),
+                      ),
+                    ),
+                    Divider(),
+                    ListTile(
+                      leading: Text("Region"),
+                      trailing:Text("County",
+                        style: TextStyle(
+                          fontSize: 12,
+                        ),
+                      ),
+                    ),
+
+                  ],
                 ),
-               SizedBox(height: 20),
-                Padding(
-                  padding: const EdgeInsets.all(12.0),
-                  child: _buildTabContent(),
-                ),
-              ],
+              ),
             ),
-          )
-        ],
+            SizedBox(height: 10),
+            Text("Funding Details",
+            style: TextStyle(
+              color: Colors.blueAccent,
+              fontSize: 17,
+            ),),
+            Card(
+              color: Color(0xFFF9FAFB),
+              child: Padding(
+                padding: const EdgeInsets.all(20.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+
+                    ListTile(
+                      leading: Text("Funding Type"),
+                      trailing:Text("Grant",
+                        style: TextStyle(
+                          fontSize: 12,
+                        ),
+                      ),
+                    ),
+                    Divider(),
+                    ListTile(
+                      leading: Text("Amount Range"),
+                      trailing:Text("Ksh 5000 - 25000",
+                        style: TextStyle(
+                          fontSize: 12,
+                        ),
+                      ),
+                    ),
+                    Divider(),
+                    ListTile(
+                      leading: Text("Application Deadline"),
+                      trailing:Text("2025-03-31",
+                        style: TextStyle(
+                          fontSize: 12,
+                        ),
+                      ),
+                    ),
+                    Divider(),
+                    ListTile(
+                      leading: Text("Contact Email"),
+                      trailing:Text("education@mombasa.go.ke",
+                        style: TextStyle(
+                          fontSize: 12,
+                        ),
+                      ),
+                    ),
+                    Divider(),
+                    ListTile(
+                      leading: Text("Website"),
+                      trailing:Text("https://mombasa.go.ke/education",
+                        style: TextStyle(
+                          fontSize: 12,
+                        ),
+                      ),
+                    ),
+
+                  ],
+                ),
+              ),
+            ),
+          ],
+        ),
       ),
     ),
     );
   }
-  Widget _buildTabContent(){
-    switch (_selectedIndex){
-      case 0:
-        return Text(
-    "The NG-CDF University Bursary program provides financial assistance to needy and deserving students enrolled in public and private universities across Kenya.It aims to support students from low-income families by easing the burden of tuition fees and ensuring that financial challenges do not interrupt their education.",style: TextStyle(fontSize: 14),
-        );
-      case 1 :
-        return Text(
-          "1.The applicant must be a Kenyan citizen enrolled in a recognized university.\n2.Priority is given to students from the respective constituency of application.\n3.The applicant must provide proof of admission or continuing student status.\n4.Applicants should not be receiving full scholarships from other organizations.\n5.The bursary must be used strictly for educational expenses.\n6.Incomplete or falsified applications will be automatically disqualified.",
-          style: TextStyle(fontSize: 14),
-        );
-      case 2:
-        return Text(
-          "1.Partial coverage of tuition or accommodation fees.\n2.Financial relief for students facing economic hardships.\n3.Encourages equal access to higher education.\n4.Promotes retention and academic performance among university students.\n5.Builds community connection through NG-CDF educational programs.",
-          style: TextStyle(fontSize: 14),
-        );
-      case 3 :
-        return Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            ListTile(
-              leading: Icon(Icons.picture_as_pdf, color: Colors.blue),
-              title: Text("Scholarship Policy Handbook (PDF)"),
-            ),
-            ListTile(
-              leading: Icon(Icons.picture_as_pdf, color: Colors.blue),
-              title: Text("Referee Report Template (PDF)"),
-            ),
-          ],
-        );
-      default :
-        return SizedBox();
-    }
-    }
+
 }
 
