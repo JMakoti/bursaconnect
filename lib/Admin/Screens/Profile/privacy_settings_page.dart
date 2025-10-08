@@ -555,7 +555,7 @@ class _PrivacySettingsPageState extends State<PrivacySettingsPage> {
         Switch(
           value: value,
           onChanged: onChanged,
-          activeThumbColor: AdminTheme.primaryPurple,
+          // activeThumbColor: AdminTheme.primaryPurple,
           activeTrackColor: AdminTheme.primaryPurple.withValues(alpha: 0.3),
           inactiveThumbColor: themeProvider.isDarkMode
               ? Colors.white

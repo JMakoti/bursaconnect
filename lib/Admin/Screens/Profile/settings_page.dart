@@ -5,7 +5,7 @@ import '../../theme/theme.dart';
 import '../../theme/theme_provider.dart';
 import 'connected_accounts_page.dart';
 import 'data_management_page.dart';
-import 'help_support_page.dart';
+// import 'help_support_page.dart';
 import 'notification_preferences_page.dart';
 import 'profile_analytics_page.dart';
 import 'profile_page.dart';
@@ -413,12 +413,12 @@ class _SettingsPageState extends State<SettingsPage> {
                 title: 'Help & Support',
                 subtitle: 'Get help and contact support',
                 onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => const HelpSupportPage(),
-                    ),
-                  );
+                  // Navigator.push(
+                  //   context,
+                  //   MaterialPageRoute(
+                  //     builder: (context) => const HelpSupportPage(),
+                  //   ),
+                  // );
                 },
               ),
             ],
@@ -538,7 +538,7 @@ class _SettingsPageState extends State<SettingsPage> {
               Switch(
                 value: value,
                 onChanged: onChanged,
-                activeThumbColor: AdminTheme.primaryPurple,
+                // activeThumbColor: AdminTheme.primaryPurple,
                 activeTrackColor: AdminTheme.primaryPurple.withValues(
                   alpha: 0.3,
                 ),

@@ -521,7 +521,7 @@ class _SecuritySettingsPageState extends State<SecuritySettingsPage> {
               Switch(
                 value: value,
                 onChanged: onChanged,
-                activeThumbColor: AdminTheme.primaryPurple,
+                // activeThumbColor: AdminTheme.primaryPurple,
                 activeTrackColor: AdminTheme.primaryPurple.withOpacity(0.3),
                 inactiveThumbColor: themeProvider.isDarkMode
                     ? Colors.white

@@ -1,14 +1,10 @@
 import 'package:flutter/material.dart';
-<<<<<<< HEAD
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import './login_screen.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import '../Services/auth_service.dart';
 import '../../core/colors.dart';
-=======
-import './login_screen.dart';
->>>>>>> c69e55a (feat(auth) = implement user signup and login flow)
 
 class SignupScreen extends StatefulWidget {
   const SignupScreen({super.key});
@@ -29,11 +25,7 @@ class _SignupScreenState extends State<SignupScreen> {
 
   bool _isPasswordVisible = false;
   bool _isConfirmPasswordVisible = false;
-<<<<<<< HEAD
   bool _isLoading = false;
-=======
-  // bool _isLoading = false;
->>>>>>> c69e55a (feat(auth) = implement user signup and login flow)
 
   // dropdown role variable
   String? _selectedRole;
@@ -52,7 +44,6 @@ class _SignupScreenState extends State<SignupScreen> {
   }
 
   // submit form
-<<<<<<< HEAD
   void _submitForm() async {
     if (_formKey.currentState!.validate()) {
       // loading state
@@ -140,14 +131,6 @@ class _SignupScreenState extends State<SignupScreen> {
       } finally {
         setState(() => _isLoading = false);
       }
-=======
-  void _submitForm() {
-    if (_formKey.currentState!.validate()) {
-      // All inputs valid – handle sign-up logic here
-      ScaffoldMessenger.of(
-        context,
-      ).showSnackBar(const SnackBar(content: Text('Creating account...')));
->>>>>>> c69e55a (feat(auth): implement user signup and login flow)
     }
   }
 
@@ -169,16 +152,12 @@ class _SignupScreenState extends State<SignupScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-<<<<<<< HEAD
       backgroundColor: AppColors.background,
-=======
-      backgroundColor: Colors.white,
->>>>>>> c69e55a (feat(auth): implement user signup and login flow)
       body: SafeArea(child: _buildAccountForm()),
     );
   }
 
-  SingleChildScrollView buildAccountForm() {
+  SingleChildScrollView _buildAccountForm() {
     return SingleChildScrollView(
       padding: const EdgeInsets.all(24),
       child: Form(
@@ -192,21 +171,13 @@ class _SignupScreenState extends State<SignupScreen> {
               style: TextStyle(
                 fontSize: 32,
                 fontWeight: FontWeight.bold,
-<<<<<<< HEAD
                 color: AppColors.text,
-=======
-                color: Colors.black,
->>>>>>> c69e55a (feat(auth): implement user signup and login flow)
               ),
             ),
             const SizedBox(height: 8),
             const Text(
               "Create an account to get all features",
-<<<<<<< HEAD
               style: TextStyle(fontSize: 16, color: AppColors.text),
-=======
-              style: TextStyle(fontSize: 16, color: Colors.black),
->>>>>>> c69e55a (feat(auth): implement user signup and login flow)
             ),
             const SizedBox(height: 48),
 
@@ -345,24 +316,12 @@ class _SignupScreenState extends State<SignupScreen> {
             // Terms and Conditions
             Row(
               children: [
-<<<<<<< HEAD
                 Icon(Icons.check_circle, color: AppColors.success, size: 20),
-=======
-                Icon(
-                  Icons.check_circle,
-                  color: const Color(0xFF19e627),
-                  size: 20,
-                ),
->>>>>>> c69e55a (feat(auth): implement user signup and login flow)
                 const SizedBox(width: 8),
                 Expanded(
                   child: Text(
                     'I agree to the Terms of Service and Privacy Policy',
-<<<<<<< HEAD
                     style: TextStyle(fontSize: 14, color: AppColors.accent),
-=======
-                    style: TextStyle(fontSize: 14, color: Colors.blue),
->>>>>>> c69e55a (feat(auth): implement user signup and login flow)
                   ),
                 ),
               ],
@@ -370,7 +329,6 @@ class _SignupScreenState extends State<SignupScreen> {
             const SizedBox(height: 32),
 
             //sign up button
-<<<<<<< HEAD
             _isLoading
                 ? const Center(child: CircularProgressIndicator())
                 : SizedBox(
@@ -386,31 +344,13 @@ class _SignupScreenState extends State<SignupScreen> {
                     ),
                   ),
             const SizedBox(height: 16),
-=======
-            SizedBox(
-              width: double.infinity,
-              child: ElevatedButton(
-                onPressed: _submitForm,
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.blue,
-                  foregroundColor: Colors.white,
-                  padding: const EdgeInsets.symmetric(vertical: 14),
-                ),
-                child: const Text("Create Account"),
-              ),
-            ),
->>>>>>> c69e55a (feat(auth): implement user signup and login flow)
             //Login Link
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 const Text(
                   "Already have an account?",
-<<<<<<< HEAD
                   style: TextStyle(color: AppColors.text),
-=======
-                  style: TextStyle(color: Colors.black),
->>>>>>> c69e55a (feat(auth): implement user signup and login flow)
                 ),
                 TextButton(
                   onPressed: () {
@@ -425,11 +365,7 @@ class _SignupScreenState extends State<SignupScreen> {
                   child: const Text(
                     "Login",
                     style: TextStyle(
-<<<<<<< HEAD
                       color: AppColors.accent,
-=======
-                      color: Colors.blue,
->>>>>>> c69e55a (feat(auth): implement user signup and login flow)
                       fontWeight: FontWeight.bold,
                     ),
                   ),

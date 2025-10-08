@@ -362,7 +362,7 @@ class _NotificationPreferencesPageState
               Switch(
                 value: value,
                 onChanged: onChanged,
-                activeThumbColor: AdminTheme.primaryPurple,
+                // activeThumbColor: AdminTheme.primaryPurple,
                 activeTrackColor: AdminTheme.primaryPurple.withValues(
                   alpha: 0.3,
                 ),
@@ -420,7 +420,7 @@ class _NotificationPreferencesPageState
               Switch(
                 value: value,
                 onChanged: onChanged,
-                activeThumbColor: AdminTheme.primaryPurple,
+                // activeThumbColor: AdminTheme.primaryPurple,
                 activeTrackColor: AdminTheme.primaryPurple.withValues(
                   alpha: 0.3,
                 ),
