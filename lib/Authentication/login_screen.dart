@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import '../../core/colors.dart';
 import './signup_screen.dart';
+import '../Services/auth_service.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -16,16 +18,47 @@ class _LoginScreenState extends State<LoginScreen> {
   final _passwordController = TextEditingController();
 
   bool _isPasswordVisible = false;
+  bool _isLoading = false;
+
+  final AuthService authService = AuthService();
 
   // submit form
-  void _submitForm() {
-    if (_formKey.currentState!.validate()) {
-      // All inputs valid – handle sign-up logic here
-      ScaffoldMessenger.of(
-        context,
-      ).showSnackBar(const SnackBar(content: Text('Loging in......')));
+  // --- LOGIN USER ---
+  Future<void> _loginUser() async {
+    if (!_formKey.currentState!.validate()) return;
+
+    setState(() => _isLoading = true);
+
+    final result = await authService.signIn(
+      _emailController.text.trim(),
+      _passwordController.text.trim(),
+    );
+
+    setState(() => _isLoading = false);
+
+    if (result != null) {
+      final role = result['role'];
+      if(!mounted) return;
+      if (role == 'Admin') {
+        Navigator.pushNamed(context, '/adminDashboard');
+      } else {
+        Navigator.pushNamed(context, '/userDashboard');
+      }
+    } else {
+      if(!mounted) return;
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Login failed. Check credentials.')),
+      );
     }
   }
+  // void _submitForm() {
+  //   if (_formKey.currentState!.validate()) {
+  //     // All inputs valid – handle sign-up logic here
+  //     ScaffoldMessenger.of(
+  //       context,
+  //     ).showSnackBar(const SnackBar(content: Text('Loging in......')));
+  //   }
+  // }
 
   // Email validation
   String? _validateEmail(String? value) {
@@ -45,7 +78,7 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: AppColors.background,
       body: SafeArea(child: _buildAccountForm()),
     );
   }
@@ -65,13 +98,13 @@ class _LoginScreenState extends State<LoginScreen> {
               style: TextStyle(
                 fontSize: 32,
                 fontWeight: FontWeight.bold,
-                color: Colors.black,
+                color: AppColors.text,
               ),
             ),
             const SizedBox(height: 8),
             const Text(
               "Sign in to continue your bursary-journey",
-              style: TextStyle(fontSize: 16, color: Colors.black),
+              style: TextStyle(fontSize: 16, color: AppColors.secondaryText,),
             ),
             const SizedBox(height: 48),
 
@@ -114,13 +147,17 @@ class _LoginScreenState extends State<LoginScreen> {
             SizedBox(
               width: double.infinity,
               child: ElevatedButton(
-                onPressed: _submitForm,
+                onPressed:  _isLoading ? null : _loginUser,
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.blue,
-                  foregroundColor: Colors.white,
+                  backgroundColor: AppColors.accent,
+                  foregroundColor: AppColors.background,
                   padding: const EdgeInsets.symmetric(vertical: 14),
                 ),
-                child: const Text("Log In"),
+                child:  _isLoading
+                    ? const CircularProgressIndicator(
+                        color: Colors.white,
+                      )
+                    :const Text("Log In"),
               ),
             ),
 
@@ -130,7 +167,7 @@ class _LoginScreenState extends State<LoginScreen> {
               children: [
                 const Text(
                   "Create A New Account?",
-                  style: TextStyle(color: Colors.black),
+                  style: TextStyle(color: AppColors.text),
                 ),
                 TextButton(
                   onPressed: () {
@@ -145,7 +182,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   child: const Text(
                     "Sign Up",
                     style: TextStyle(
-                      color: Colors.blue,
+                      color: AppColors.accent,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
