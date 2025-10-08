@@ -36,7 +36,7 @@ class MyApp extends StatelessWidget {
       },
       title: 'BursaConnect',
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.indigo),
+        colorScheme: ColorScheme.fromSeed(seedColor: Colors.blueAccent),
         useMaterial3: true,
       ),
 
