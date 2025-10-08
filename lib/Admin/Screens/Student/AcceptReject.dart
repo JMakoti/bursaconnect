@@ -20,6 +20,9 @@ class _AcceptrejectState extends State<Acceptreject> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               ExpansionTile(title: Text("Student Info"),
+                shape: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(10),
+                ),
                 children: [
                   ListTile(
                     leading: Icon(Icons.person,size: 13,),
@@ -42,12 +45,12 @@ class _AcceptrejectState extends State<Acceptreject> {
                     subtitle: Text("112288"),
                   )
                 ],
-                shape: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(10),
-                ),
               ),
               SizedBox(height: 10),
               ExpansionTile(title: Text("Education Info"),
+                shape: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(10),
+                ),
                 children: [
                   ListTile(
                     leading: Icon(Icons.school_outlined,size: 13,),
@@ -80,12 +83,12 @@ class _AcceptrejectState extends State<Acceptreject> {
                     subtitle: Text("Regular"),
                   )
                 ],
-                shape: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(10),
-                ),
               ),
               SizedBox(height: 10),
               ExpansionTile(title: Text("Bursary Info"),
+                shape: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(10),
+                ),
                 children: [
                   ListTile(
                     leading: Icon(Icons.monetization_on,size: 13,),
@@ -122,12 +125,12 @@ class _AcceptrejectState extends State<Acceptreject> {
                     ),
                   )
                 ],
-                shape: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(10),
-                ),
               ),
               SizedBox(height: 10),
               ExpansionTile(title: Text("Attachments"),
+                shape: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(10),
+                ),
                 children: [
                   ListTile(
                     leading: Icon(Icons.attachment,size: 13,),
@@ -153,9 +156,6 @@ class _AcceptrejectState extends State<Acceptreject> {
                   ),
 
                 ],
-                shape: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(10),
-                ),
               ),
             ],
           ),
@@ -190,18 +190,18 @@ class _AcceptrejectState extends State<Acceptreject> {
               child: ElevatedButton(onPressed: (){
                 _ShowConfirmationDialog(context, "Approve");
               },
-                child: Text("Approve",
-                  style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 16,
-                      fontWeight: FontWeight.w700
-                  ),),
                 style: ElevatedButton.styleFrom(
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(10),
                   ),
                   backgroundColor: Colors.blueAccent,
                 ),
+                child: Text("Approve",
+                  style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 16,
+                      fontWeight: FontWeight.w700
+                  ),),
               ),
             )
           ],
@@ -223,12 +223,12 @@ class _AcceptrejectState extends State<Acceptreject> {
               ),
               ElevatedButton(onPressed: (){
                 Navigator.pop(context);
-              }, child: Text(
-                  isApprove ? "Approve" : "Reject"
-              ),
+              },
                 style: ElevatedButton.styleFrom(
                     backgroundColor: isApprove ? Colors.blueAccent : Colors.red
-                ),
+                ), child: Text(
+                  isApprove ? "Approve" : "Reject"
+              ),
               )
             ],
           );

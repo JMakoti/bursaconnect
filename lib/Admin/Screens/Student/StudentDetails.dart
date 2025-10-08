@@ -20,6 +20,9 @@ class _StudentdetailsState extends State<Studentdetails> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               ExpansionTile(title: Text("Student Info"),
+                shape: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(10),
+                ),
                 children: [
                  ListTile(
                    leading: Icon(Icons.person,size: 13,),
@@ -42,12 +45,12 @@ class _StudentdetailsState extends State<Studentdetails> {
                     subtitle: Text("112288"),
                   )
                 ],
-                shape: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(10),
-                ),
               ),
               SizedBox(height: 10),
               ExpansionTile(title: Text("Education Info"),
+                shape: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(10),
+                ),
                 children: [
                   ListTile(
                     leading: Icon(Icons.school_outlined,size: 13,),
@@ -80,12 +83,12 @@ class _StudentdetailsState extends State<Studentdetails> {
                     subtitle: Text("Regular"),
                   )
                 ],
-                shape: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(10),
-                ),
               ),
               SizedBox(height: 10),
               ExpansionTile(title: Text("Bursary Info"),
+                shape: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(10),
+                ),
                 children: [
                   ListTile(
                     leading: Icon(Icons.monetization_on,size: 13,),
@@ -122,12 +125,12 @@ class _StudentdetailsState extends State<Studentdetails> {
                     ),
                   )
                 ],
-                shape: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(10),
-                ),
               ),
               SizedBox(height: 10),
               ExpansionTile(title: Text("Attachments"),
+                shape: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(10),
+                ),
                 children: [
                   ListTile(
                     leading: Icon(Icons.attachment,size: 13,),
@@ -153,9 +156,6 @@ class _StudentdetailsState extends State<Studentdetails> {
                   ),
 
                 ],
-                shape: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(10),
-                ),
               ),
             ],
           ),

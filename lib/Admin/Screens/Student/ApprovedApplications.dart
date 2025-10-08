@@ -52,16 +52,16 @@ class _ApprovedapplicationsState extends State<Approvedapplications> {
                     children: [
                       ListTile(
                         leading: Container(
-                          child: Icon(
-                            Icons.person,
-                            size: 14,
-                          ),
                           decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(10),
                               color: Colors.grey.shade200
                           ),
                           width: 30,
                           height: 30,
+                          child: Icon(
+                            Icons.person,
+                            size: 14,
+                          ),
                         ),
                         title: Text("John Maina",
                         style: TextStyle(
@@ -114,16 +114,16 @@ class _ApprovedapplicationsState extends State<Approvedapplications> {
                     children: [
                       ListTile(
                         leading: Container(
-                          child: Icon(
-                            Icons.person,
-                            size: 14,
-                          ),
                           decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(10),
                               color: Colors.grey.shade200
                           ),
                           width: 30,
                           height: 30,
+                          child: Icon(
+                            Icons.person,
+                            size: 14,
+                          ),
                         ),
                         title: Text("John Maina",
                         style: TextStyle(
@@ -176,16 +176,16 @@ class _ApprovedapplicationsState extends State<Approvedapplications> {
                     children: [
                       ListTile(
                         leading: Container(
-                          child: Icon(
-                            Icons.person,
-                            size: 14,
-                          ),
                           decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(10),
                               color: Colors.grey.shade200
                           ),
                           width: 30,
                           height: 30,
+                          child: Icon(
+                            Icons.person,
+                            size: 14,
+                          ),
                         ),
                         title: Text("John Maina",
                         style: TextStyle(

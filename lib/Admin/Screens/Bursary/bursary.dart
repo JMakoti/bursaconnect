@@ -96,24 +96,20 @@ class Bursary extends StatelessWidget {
                                 child: ElevatedButton(onPressed: (){
                                   Navigator.pushNamed(context, "/bursarydetail");
                                 },
-                                    child: Text("View Details",
-                                    style: TextStyle(
-                                      color: Colors.white,
-                                    ),),
                                   style: ElevatedButton.styleFrom(
                                     backgroundColor: Colors.blueAccent,
                                     shape: RoundedRectangleBorder(
                                       borderRadius: BorderRadius.circular(10),
                                     )
                                   ),
+                                    child: Text("View Details",
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                    ),),
                                 ),
                               ),
                               SizedBox(width: 8),
                               Expanded(child: ElevatedButton(onPressed: (){},
-                                  child: Text("Delete",
-                                  style: TextStyle(
-                                    color: Colors.white
-                                  ),),
                                 style: ElevatedButton.styleFrom(
                                   backgroundColor: Colors.red,
                                   shape: RoundedRectangleBorder(
@@ -121,6 +117,10 @@ class Bursary extends StatelessWidget {
 
                                   )
                                 ),
+                                  child: Text("Delete",
+                                  style: TextStyle(
+                                    color: Colors.white
+                                  ),),
                               ),
                               )
                             ],
@@ -197,24 +197,20 @@ class Bursary extends StatelessWidget {
                             children: [
                               Expanded(
                                 child: ElevatedButton(onPressed: (){},
-                                  child: Text("View Details",
-                                    style: TextStyle(
-                                      color: Colors.white,
-                                    ),),
                                   style: ElevatedButton.styleFrom(
                                       backgroundColor: Colors.blueAccent,
                                       shape: RoundedRectangleBorder(
                                         borderRadius: BorderRadius.circular(10),
                                       )
                                   ),
+                                  child: Text("View Details",
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                    ),),
                                 ),
                               ),
                               SizedBox(width: 8),
                               Expanded(child: ElevatedButton(onPressed: (){},
-                                child: Text("Delete",
-                                  style: TextStyle(
-                                      color: Colors.white
-                                  ),),
                                 style: ElevatedButton.styleFrom(
                                     backgroundColor: Colors.red,
                                     shape: RoundedRectangleBorder(
@@ -222,6 +218,10 @@ class Bursary extends StatelessWidget {
 
                                     )
                                 ),
+                                child: Text("Delete",
+                                  style: TextStyle(
+                                      color: Colors.white
+                                  ),),
                               ),
                               )
                             ],
@@ -298,24 +298,20 @@ class Bursary extends StatelessWidget {
                             children: [
                               Expanded(
                                 child: ElevatedButton(onPressed: (){},
-                                  child: Text("View Details",
-                                    style: TextStyle(
-                                      color: Colors.white,
-                                    ),),
                                   style: ElevatedButton.styleFrom(
                                       backgroundColor: Colors.blueAccent,
                                       shape: RoundedRectangleBorder(
                                         borderRadius: BorderRadius.circular(10),
                                       )
                                   ),
+                                  child: Text("View Details",
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                    ),),
                                 ),
                               ),
                               SizedBox(width: 8),
                               Expanded(child: ElevatedButton(onPressed: (){},
-                                child: Text("Delete",
-                                  style: TextStyle(
-                                      color: Colors.white
-                                  ),),
                                 style: ElevatedButton.styleFrom(
                                     backgroundColor: Colors.red,
                                     shape: RoundedRectangleBorder(
@@ -323,6 +319,10 @@ class Bursary extends StatelessWidget {
 
                                     )
                                 ),
+                                child: Text("Delete",
+                                  style: TextStyle(
+                                      color: Colors.white
+                                  ),),
                               ),
                               )
                             ],
