@@ -49,16 +49,16 @@ class _StudentState extends State<Student> {
                   children: [
                    ListTile(
                      leading: Container(
-                       child: Icon(
-                         Icons.person,
-                         size: 14,
-                       ),
                        decoration: BoxDecoration(
                          borderRadius: BorderRadius.circular(10),
                          color: Colors.grey.shade200
                        ),
                        width: 30,
                        height: 30,
+                       child: Icon(
+                         Icons.person,
+                         size: 14,
+                       ),
                      ),
                      title: Text("John Maina"),
                      subtitle: Wrap(
@@ -108,16 +108,16 @@ class _StudentState extends State<Student> {
                   children: [
                     ListTile(
                       leading: Container(
-                        child: Icon(
-                          Icons.person,
-                          size: 14,
-                        ),
                         decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(10),
                             color: Colors.grey.shade200
                         ),
                         width: 30,
                         height: 30,
+                        child: Icon(
+                          Icons.person,
+                          size: 14,
+                        ),
                       ),
                       title: Text("John Maina"),
                       subtitle: Wrap(
@@ -167,16 +167,16 @@ class _StudentState extends State<Student> {
                   children: [
                     ListTile(
                       leading: Container(
-                        child: Icon(
-                          Icons.person,
-                          size: 14,
-                        ),
                         decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(10),
                             color: Colors.grey.shade200
                         ),
                         width: 30,
                         height: 30,
+                        child: Icon(
+                          Icons.person,
+                          size: 14,
+                        ),
                       ),
                       title: Text("John Maina"),
                       subtitle: Wrap(
