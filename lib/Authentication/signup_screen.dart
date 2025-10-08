@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import './login_screen.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import '../Services/auth_service.dart';
 
 class SignupScreen extends StatefulWidget {
   const SignupScreen({super.key});
@@ -23,7 +24,7 @@ class _SignupScreenState extends State<SignupScreen> {
 
   bool _isPasswordVisible = false;
   bool _isConfirmPasswordVisible = false;
-  // bool _isLoading = false;
+  bool _isLoading = false;
 
   // dropdown role variable
   String? _selectedRole;
@@ -44,6 +45,9 @@ class _SignupScreenState extends State<SignupScreen> {
   // submit form
   void _submitForm() async {
     if (_formKey.currentState!.validate()) {
+      // loading state
+      setState(() => _isLoading = true);
+
       Fluttertoast.showToast(
         msg: "Creating account...",
         toastLength: Toast.LENGTH_SHORT,
@@ -53,27 +57,32 @@ class _SignupScreenState extends State<SignupScreen> {
         fontSize: 16.0,
       );
 
+      final authService = AuthService();
+
       try {
         // Create user in Firebase Authentication
-        final credential = await FirebaseAuth.instance
-            .createUserWithEmailAndPassword(
-              email: _emailController.text.trim(),
-              password: _passwordController.text.trim(),
-            );
+        final user = await authService.signUp(
+          _emailController.text.trim(),
+          _passwordController.text.trim(),
+        );
 
+        if (user == null) {
+          Fluttertoast.showToast(
+            msg: "Account creation failed",
+            backgroundColor: Colors.red,
+            textColor: Colors.white,
+          );
+          setState(() => _isLoading = false);
+          return;
+        }
         // Save user info in Firestore
-        await FirebaseFirestore.instance
-            .collection('users')
-            .doc(credential.user!.uid)
-            .set({
-              'fullname': _fullnameController.text.trim(),
-              'phone': _phoneController.text.trim(),
-              'email': _emailController.text.trim(),
-              'role': _selectedRole,
-              'createdAt': FieldValue.serverTimestamp(),
-            });
-
-        if (!mounted) return;
+        await FirebaseFirestore.instance.collection('users').doc(user.uid).set({
+          'fullname': _fullnameController.text.trim(),
+          'phone': _phoneController.text.trim(),
+          'email': _emailController.text.trim(),
+          'role': _selectedRole,
+          'createdAt': FieldValue.serverTimestamp(),
+        });
 
         Fluttertoast.showToast(
           msg: "Account created successfully!",
@@ -83,6 +92,8 @@ class _SignupScreenState extends State<SignupScreen> {
           textColor: Colors.white,
           fontSize: 16.0,
         );
+
+        if (!mounted) return;
 
         Navigator.pushReplacement(
           context,
@@ -116,6 +127,8 @@ class _SignupScreenState extends State<SignupScreen> {
           textColor: Colors.white,
           fontSize: 16.0,
         );
+      } finally {
+        setState(() => _isLoading = false);
       }
     }
   }
@@ -319,18 +332,21 @@ class _SignupScreenState extends State<SignupScreen> {
             const SizedBox(height: 32),
 
             //sign up button
-            SizedBox(
-              width: double.infinity,
-              child: ElevatedButton(
-                onPressed: _submitForm,
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.blue,
-                  foregroundColor: Colors.white,
-                  padding: const EdgeInsets.symmetric(vertical: 14),
-                ),
-                child: const Text("Create Account"),
-              ),
-            ),
+            _isLoading
+                ? const Center(child: CircularProgressIndicator())
+                : SizedBox(
+                    width: double.infinity,
+                    child: ElevatedButton(
+                      onPressed: _submitForm,
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.blue,
+                        foregroundColor: Colors.white,
+                        padding: const EdgeInsets.symmetric(vertical: 14),
+                      ),
+                      child: const Text("Create Account"),
+                    ),
+                  ),
+            const SizedBox(height: 16),
             //Login Link
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
