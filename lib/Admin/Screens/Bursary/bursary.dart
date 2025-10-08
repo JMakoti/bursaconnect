@@ -4,6 +4,7 @@ class Bursary extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    
     return Scaffold(
         body:SafeArea(child: SingleChildScrollView(
           child: Padding(
@@ -18,81 +19,210 @@ class Bursary extends StatelessWidget {
                       fontSize: 20,
                     ),
                   ),
-                  trailing: SizedBox(
-                    width: 130,
 
-                    child: TextFormField(
-                      decoration: InputDecoration(
-                          isDense: true,
-                          suffixIcon: Icon(Icons.search),
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10.0),
-                        )
+                ),
+                SizedBox(height: 5),
+                TextFormField(
+                  decoration: InputDecoration(
+                    prefixIcon: Icon(Icons.search),
+                    hintText: "...Search",
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(20),
+                    )
 
-                      ),
-                    ),
-                  )
+                  ),
                 ),
                 SizedBox(height: 20),
-                GestureDetector(
-                  onTap: (){
-                    Navigator.pushNamed(context,'/bursarydetail');
-                  },
-                  child: Card(
+
+                  Card(
+                    color: Color(0xFFF9FAFB),
                     child: Padding(
                       padding: const EdgeInsets.all(13.0),
                       child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Row(
+                        ListTile(
+                          leading: Container(
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(45),
+                              color: Colors.blue.shade100,
+                            ),
+
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Icon(Icons.school,
+                              color: Colors.blueAccent,),
+                            ),
+                          ),
+                          title: Text('County Government Bursary',
+                          style: TextStyle(
+                            fontWeight: FontWeight.w700,
+                          ),
+                          ),
+                          subtitle: Text("Mombasa County Government",
+                          style: TextStyle(
+                            color: Colors.grey.shade400,
+                          ),),
+                        ),
+                          SizedBox(
+                            height: 5,
+                          ),
+                          Text("Need-Based",
+                          style: TextStyle(
+                            color: Colors.blueAccent,
+                            fontWeight: FontWeight.bold,
+                          ),
+                          ),
+                          SizedBox(height: 2),
+                          Wrap(
+                            spacing: 4,
                             children: [
-                              Image.network('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS1aQfvqcW7YmIYD0A6DlBNKM8NnFVHqUFMDQ&s',
-                              width: 100,
-                              fit: BoxFit.cover,
-                              height: 100),
-                              SizedBox(width: 5),
-                              Column(
-                                mainAxisSize: MainAxisSize.max,
-                                children: [
-                                  Padding(
-                                    padding: const EdgeInsets.fromLTRB(0, 0, 120.0, 0),
-                                    child: Text("NG-CDF Bursary",
+                              Text("Application:",
+                              style: TextStyle(
+                                color: Colors.grey.shade500
+                              ),
+                              ),
+                              Text("April - March",
+                                style: TextStyle(
+                                    color: Colors.grey.shade500
+                                ),)
+                            ],
+                          ),
+                          SizedBox(height: 10),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: [
+                              Expanded(
+                                child: ElevatedButton(onPressed: (){
+                                  Navigator.pushNamed(context, "/bursarydetail");
+                                },
+                                    child: Text("View Details",
                                     style: TextStyle(
-                                      fontWeight: FontWeight.bold
+                                      color: Colors.white,
                                     ),),
+                                  style: ElevatedButton.styleFrom(
+                                    backgroundColor: Colors.blueAccent,
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(10),
+                                    )
                                   ),
-                                  SizedBox(height: 5.0),
-                                  Text("Supports needy university students by covering\npart of tuition and upkeep costs to ensure\nuninterrupted learning. ",
+                                ),
+                              ),
+                              SizedBox(width: 8),
+                              Expanded(child: ElevatedButton(onPressed: (){},
+                                  child: Text("Delete",
                                   style: TextStyle(
-                                    fontSize: 10,
-                                    color: Colors.grey.shade500,
+                                    color: Colors.white
                                   ),),
-                                  SizedBox(height: 10),
-                                  Row(
-                                    mainAxisSize: MainAxisSize.min,
-                                    children: [
-                                      Icon(Icons.calendar_month,
-                                        color: Colors.grey.shade500,
-                                      size: 13,),
-                                      Text("1 September - 30 September",
-                                      style: TextStyle(
-                                        fontSize:10,
-                                        color: Colors.grey.shade500
-                                      ),),
-                                      SizedBox(width: 10),
-                                      Icon(Icons.school_outlined,
-                                        color: Colors.grey.shade500,
-                                      size: 13,),
-                                      Text("Undegraduate",
-                                      style: TextStyle(
-                                        fontSize: 10,
-                                          color: Colors.grey.shade500
-                                      ),)
-                                    ],
+                                style: ElevatedButton.styleFrom(
+                                  backgroundColor: Colors.red,
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadiusGeometry.circular(10),
+
                                   )
+                                ),
+                              ),
+                              )
+                            ],
+                          )
+                        ],
+                      ),
+                    ),
+                  ),
 
+                SizedBox(
+                  height: 10,
+                ),
+                GestureDetector(
+                  onTap: (){
+                    Navigator.pushNamed(context,'/bursarydetail');
+                  },
+                  child:Card(
+                    color: Color(0xFFF9FAFB),
+                    child: Padding(
+                      padding: const EdgeInsets.all(13.0),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          ListTile(
+                            leading: Container(
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(45),
+                                color: Colors.blue.shade100,
+                              ),
 
+                              child: Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Icon(Icons.school,
+                                  color: Colors.blueAccent,),
+                              ),
+                            ),
+                            title: Text('County Government Bursary',
+                              style: TextStyle(
+                                fontWeight: FontWeight.w700,
+                              ),
+                            ),
+                            subtitle: Text("Mombasa County Government",
+                              style: TextStyle(
+                                color: Colors.grey.shade400,
+                              ),),
+                          ),
+                          SizedBox(
+                            height: 5,
+                          ),
+                          Text("Need-Based",
+                            style: TextStyle(
+                              color: Colors.blueAccent,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          SizedBox(height: 2),
+                          Wrap(
+                            spacing: 4,
+                            children: [
+                              Text("Application:",
+                                style: TextStyle(
+                                    color: Colors.grey.shade500
+                                ),
+                              ),
+                              Text("April - March",
+                                style: TextStyle(
+                                    color: Colors.grey.shade500
+                                ),)
+                            ],
+                          ),
+                          SizedBox(height: 10),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: [
+                              Expanded(
+                                child: ElevatedButton(onPressed: (){},
+                                  child: Text("View Details",
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                    ),),
+                                  style: ElevatedButton.styleFrom(
+                                      backgroundColor: Colors.blueAccent,
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(10),
+                                      )
+                                  ),
+                                ),
+                              ),
+                              SizedBox(width: 8),
+                              Expanded(child: ElevatedButton(onPressed: (){},
+                                child: Text("Delete",
+                                  style: TextStyle(
+                                      color: Colors.white
+                                  ),),
+                                style: ElevatedButton.styleFrom(
+                                    backgroundColor: Colors.red,
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadiusGeometry.circular(10),
 
-                                ],
+                                    )
+                                ),
+                              ),
                               )
                             ],
                           )
@@ -109,130 +239,91 @@ class Bursary extends StatelessWidget {
                     Navigator.pushNamed(context,'/bursarydetail');
                   },
                   child: Card(
+                    color: Color(0xFFF9FAFB),
                     child: Padding(
                       padding: const EdgeInsets.all(13.0),
                       child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Row(
+                          ListTile(
+                            leading: Container(
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(45),
+                                color: Colors.blue.shade100,
+                              ),
+
+                              child: Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Icon(Icons.school,
+                                  color: Colors.blueAccent,),
+                              ),
+                            ),
+                            title: Text('County Government Bursary',
+                              style: TextStyle(
+                                fontWeight: FontWeight.w700,
+                              ),
+                            ),
+                            subtitle: Text("Mombasa County Government",
+                              style: TextStyle(
+                                color: Colors.grey.shade400,
+                              ),),
+                          ),
+                          SizedBox(
+                            height: 5,
+                          ),
+                          Text("Need-Based",
+                            style: TextStyle(
+                              color: Colors.blueAccent,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          SizedBox(height: 2),
+                          Wrap(
+                            spacing: 4,
                             children: [
-                              Image.network('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS1aQfvqcW7YmIYD0A6DlBNKM8NnFVHqUFMDQ&s',
-                                  width: 100,
-                                  fit: BoxFit.cover,
-                                  height: 100),
-                              SizedBox(width: 5),
-                              Column(
-                                mainAxisSize: MainAxisSize.max,
-                                children: [
-                                  Padding(
-                                    padding: const EdgeInsets.fromLTRB(0, 0, 120.0, 0),
-                                    child: Text("NG-CDF Bursary",
-                                      style: TextStyle(
-                                          fontWeight: FontWeight.bold
-                                      ),),
-                                  ),
-                                  SizedBox(height: 5.0),
-                                  Text("Supports needy university students by covering\npart of tuition and upkeep costs to ensure\nuninterrupted learning. ",
-                                    style: TextStyle(
-                                      fontSize: 10,
-                                      color: Colors.grey.shade500,
-                                    ),),
-                                  SizedBox(height: 10),
-                                  Row(
-                                    mainAxisSize: MainAxisSize.min,
-                                    children: [
-                                      Icon(Icons.calendar_month,
-                                        color: Colors.grey.shade500,
-                                        size: 13,),
-                                      Text("1 September - 30 September",
-                                        style: TextStyle(
-                                            fontSize:10,
-                                            color: Colors.grey.shade500
-                                        ),),
-                                      SizedBox(width: 10),
-                                      Icon(Icons.school_outlined,
-                                        color: Colors.grey.shade500,
-                                        size: 13,),
-                                      Text("Undegraduate",
-                                        style: TextStyle(
-                                            fontSize: 10,
-                                            color: Colors.grey.shade500
-                                        ),)
-                                    ],
-                                  )
-
-
-
-                                ],
-                              )
+                              Text("Application:",
+                                style: TextStyle(
+                                    color: Colors.grey.shade500
+                                ),
+                              ),
+                              Text("April - March",
+                                style: TextStyle(
+                                    color: Colors.grey.shade500
+                                ),)
                             ],
-                          )
-                        ],
-                      ),
-                    ),
-                  ),
-                ),
-                SizedBox(
-                  height: 10,
-                ),
-                GestureDetector(
-                  onTap: (){
-                    Navigator.pushNamed(context,'/bursarydetail');
-                  },
-                  child: Card(
-                    child: Padding(
-                      padding: const EdgeInsets.all(13.0),
-                      child: Column(
-                        children: [
+                          ),
+                          SizedBox(height: 10),
                           Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             children: [
-                              Image.network('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS1aQfvqcW7YmIYD0A6DlBNKM8NnFVHqUFMDQ&s',
-                                  width: 100,
-                                  fit: BoxFit.cover,
-                                  height: 100),
-                              SizedBox(width: 5),
-                              Column(
-                                mainAxisSize: MainAxisSize.max,
-                                children: [
-                                  Padding(
-                                    padding: const EdgeInsets.fromLTRB(0, 0, 120.0, 0),
-                                    child: Text("NG-CDF Bursary",
-                                      style: TextStyle(
-                                          fontWeight: FontWeight.bold
-                                      ),),
-                                  ),
-                                  SizedBox(height: 5.0),
-                                  Text("Supports needy university students by covering\npart of tuition and upkeep costs to ensure\nuninterrupted learning. ",
+                              Expanded(
+                                child: ElevatedButton(onPressed: (){},
+                                  child: Text("View Details",
                                     style: TextStyle(
-                                      fontSize: 10,
-                                      color: Colors.grey.shade500,
+                                      color: Colors.white,
                                     ),),
-                                  SizedBox(height: 10),
-                                  Row(
-                                    mainAxisSize: MainAxisSize.min,
-                                    children: [
-                                      Icon(Icons.calendar_month,
-                                        color: Colors.grey.shade500,
-                                        size: 13,),
-                                      Text("1 September - 30 September",
-                                        style: TextStyle(
-                                            fontSize:10,
-                                            color: Colors.grey.shade500
-                                        ),),
-                                      SizedBox(width: 10),
-                                      Icon(Icons.school_outlined,
-                                        color: Colors.grey.shade500,
-                                        size: 13,),
-                                      Text("Undegraduate",
-                                        style: TextStyle(
-                                            fontSize: 10,
-                                            color: Colors.grey.shade500
-                                        ),)
-                                    ],
-                                  )
+                                  style: ElevatedButton.styleFrom(
+                                      backgroundColor: Colors.blueAccent,
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(10),
+                                      )
+                                  ),
+                                ),
+                              ),
+                              SizedBox(width: 8),
+                              Expanded(child: ElevatedButton(onPressed: (){},
+                                child: Text("Delete",
+                                  style: TextStyle(
+                                      color: Colors.white
+                                  ),),
+                                style: ElevatedButton.styleFrom(
+                                    backgroundColor: Colors.red,
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadiusGeometry.circular(10),
 
-
-
-                                ],
+                                    )
+                                ),
+                              ),
                               )
                             ],
                           )
