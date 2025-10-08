@@ -3,9 +3,14 @@
 #
 
 list(APPEND FLUTTER_PLUGIN_LIST
+<<<<<<< HEAD
   cloud_firestore
   firebase_auth
+=======
+  file_selector_windows
+>>>>>>> origin/admin-dashboard-profile
   firebase_core
+  local_auth_windows
 )
 
 list(APPEND FLUTTER_FFI_PLUGIN_LIST
