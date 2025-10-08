@@ -4,6 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import './login_screen.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import '../Services/auth_service.dart';
+import '../../core/colors.dart';
 
 class SignupScreen extends StatefulWidget {
   const SignupScreen({super.key});
@@ -52,8 +53,8 @@ class _SignupScreenState extends State<SignupScreen> {
         msg: "Creating account...",
         toastLength: Toast.LENGTH_SHORT,
         gravity: ToastGravity.BOTTOM,
-        backgroundColor: Colors.blue,
-        textColor: Colors.white,
+        backgroundColor: AppColors.accent,
+        textColor: AppColors.background,
         fontSize: 16.0,
       );
 
@@ -69,8 +70,8 @@ class _SignupScreenState extends State<SignupScreen> {
         if (user == null) {
           Fluttertoast.showToast(
             msg: "Account creation failed",
-            backgroundColor: Colors.red,
-            textColor: Colors.white,
+            backgroundColor: AppColors.error,
+            textColor: AppColors.background,
           );
           setState(() => _isLoading = false);
           return;
@@ -88,8 +89,8 @@ class _SignupScreenState extends State<SignupScreen> {
           msg: "Account created successfully!",
           toastLength: Toast.LENGTH_SHORT,
           gravity: ToastGravity.CENTER,
-          backgroundColor: Colors.green,
-          textColor: Colors.white,
+          backgroundColor: AppColors.success,
+          textColor: AppColors.background,
           fontSize: 16.0,
         );
 
@@ -113,8 +114,8 @@ class _SignupScreenState extends State<SignupScreen> {
           msg: message,
           toastLength: Toast.LENGTH_LONG,
           gravity: ToastGravity.BOTTOM,
-          backgroundColor: Colors.red,
-          textColor: Colors.white,
+          backgroundColor: AppColors.error,
+          textColor: AppColors.background,
           fontSize: 16.0,
         );
       } catch (e) {
@@ -123,8 +124,8 @@ class _SignupScreenState extends State<SignupScreen> {
           msg: "Error: $e",
           toastLength: Toast.LENGTH_LONG,
           gravity: ToastGravity.BOTTOM,
-          backgroundColor: Colors.redAccent,
-          textColor: Colors.white,
+          backgroundColor: AppColors.error,
+          textColor: AppColors.background,
           fontSize: 16.0,
         );
       } finally {
@@ -151,7 +152,7 @@ class _SignupScreenState extends State<SignupScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: AppColors.background,
       body: SafeArea(child: _buildAccountForm()),
     );
   }
@@ -170,13 +171,13 @@ class _SignupScreenState extends State<SignupScreen> {
               style: TextStyle(
                 fontSize: 32,
                 fontWeight: FontWeight.bold,
-                color: Colors.black,
+                color: AppColors.text,
               ),
             ),
             const SizedBox(height: 8),
             const Text(
               "Create an account to get all features",
-              style: TextStyle(fontSize: 16, color: Colors.black),
+              style: TextStyle(fontSize: 16, color: AppColors.text),
             ),
             const SizedBox(height: 48),
 
@@ -315,16 +316,12 @@ class _SignupScreenState extends State<SignupScreen> {
             // Terms and Conditions
             Row(
               children: [
-                Icon(
-                  Icons.check_circle,
-                  color: const Color(0xFF19e627),
-                  size: 20,
-                ),
+                Icon(Icons.check_circle, color: AppColors.success, size: 20),
                 const SizedBox(width: 8),
                 Expanded(
                   child: Text(
                     'I agree to the Terms of Service and Privacy Policy',
-                    style: TextStyle(fontSize: 14, color: Colors.blue),
+                    style: TextStyle(fontSize: 14, color: AppColors.accent),
                   ),
                 ),
               ],
@@ -339,8 +336,8 @@ class _SignupScreenState extends State<SignupScreen> {
                     child: ElevatedButton(
                       onPressed: _submitForm,
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.blue,
-                        foregroundColor: Colors.white,
+                        backgroundColor: AppColors.accent,
+                        foregroundColor: AppColors.background,
                         padding: const EdgeInsets.symmetric(vertical: 14),
                       ),
                       child: const Text("Create Account"),
@@ -353,7 +350,7 @@ class _SignupScreenState extends State<SignupScreen> {
               children: [
                 const Text(
                   "Already have an account?",
-                  style: TextStyle(color: Colors.black),
+                  style: TextStyle(color: AppColors.text),
                 ),
                 TextButton(
                   onPressed: () {
@@ -368,7 +365,7 @@ class _SignupScreenState extends State<SignupScreen> {
                   child: const Text(
                     "Login",
                     style: TextStyle(
-                      color: Colors.blue,
+                      color: AppColors.accent,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
