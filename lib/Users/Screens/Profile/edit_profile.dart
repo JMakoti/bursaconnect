@@ -252,28 +252,7 @@ class _EditStudentStepperPageState extends State<EditStudentStepperPage> {
           state: _currentStep > 2 ? StepState.complete : StepState.indexed,
         ),
 
-        Step(
-          title: const Text('Bursary'),
-          content: Form(
-            key: _formKeys[3],
-            child: Column(
-              children: [
-                TextFormField(controller: _amountRequestedCtrl, decoration: const InputDecoration(labelText: 'Amount requested'), keyboardType: TextInputType.number),
-                const SizedBox(height: 8),
-                TextFormField(controller: _amountReceivedCtrl, decoration: const InputDecoration(labelText: 'Amount received'), keyboardType: TextInputType.number),
-                const SizedBox(height: 8),
-                DropdownButtonFormField<String>(
-                  value: _bursaryStatus,
-                  items: ['Pending', 'Approved', 'Rejected'].map((s) => DropdownMenuItem(value: s, child: Text(s))).toList(),
-                  onChanged: (v) => setState(() => _bursaryStatus = v ?? 'Pending'),
-                  decoration: const InputDecoration(labelText: 'Status'),
-                )
-              ],
-            ),
-          ),
-          isActive: _currentStep >= 3,
-          state: _currentStep > 3 ? StepState.complete : StepState.indexed,
-        ),
+
 
         Step(
           title: const Text('Attachments'),
