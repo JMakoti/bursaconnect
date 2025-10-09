@@ -1,9 +1,5 @@
 
-/// ------------------------------------------------------------------
-/// EditStudentStepperPage
-/// Full-screen page with a Stepper that edits the Student object and
-/// returns the updated Student via Navigator.pop(updatedStudent).
-/// ------------------------------------------------------------------
+
 import 'package:flutter/material.dart';
 import '../../../core/colors/colors.dart';
 // import '../../Data/mock_student.dart'; 
