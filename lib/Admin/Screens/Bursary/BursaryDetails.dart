@@ -151,6 +151,98 @@ class _BursaryDetailsState extends State<BursaryDetails> {
                 ),
               ),
             ),
+            SizedBox(height: 10),
+            Text("Eligibility Criteria",
+              style: TextStyle(
+                color: Colors.blueAccent,
+                fontSize: 17,
+              ),),
+            Card(
+              color: Color(0xFFF9FAFB),
+              child: Padding(
+                padding: const EdgeInsets.all(20.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+
+                  Text("Must be a resident of Mombasa",
+                  style: TextStyle(),),
+                    SizedBox(height: 10),
+                    Text("Enrolled in a recognized secondary or tertiary institution"),
+                    SizedBox(height: 10),
+                    Text("Proof of financial aid"),
+                    SizedBox(height: 10),
+                    Text("Recommendation from area Chief or MCA"),
+                    SizedBox(height: 10),
+
+                    
+
+                  ],
+                ),
+              ),
+            ),
+            Text("Application Details",
+              style: TextStyle(
+                color: Colors.blueAccent,
+                fontSize: 17,
+              ),),
+            Card(
+              color: Color(0xFFF9FAFB),
+              child: Padding(
+                padding: const EdgeInsets.all(20.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+
+                    ListTile(
+                      leading: Text("Mode of Application"),
+                      trailing:Text("Through Ward office",
+                        style: TextStyle(
+                          fontSize: 12,
+                        ),
+                      ),
+                    ),
+                    Divider(),
+                    ListTile(
+                      leading: Text("Application Period"),
+                      trailing:Text("January - March",
+                        style: TextStyle(
+                          fontSize: 12,
+                        ),
+                      ),
+                    ),
+                    Divider(),
+                    ListTile(
+                      leading: Text("Application Deadline"),
+                      trailing:Text("2025-03-31",
+                        style: TextStyle(
+                          fontSize: 12,
+                        ),
+                      ),
+                    ),
+                    Divider(),
+                    ListTile(
+                      leading: Text("Application Link"),
+                      trailing:Text("N/A",
+                        style: TextStyle(
+                          fontSize: 12,
+                        ),
+                      ),
+                    ),
+                    Divider(),
+                    ListTile(
+                      leading: Text("Status"),
+                      trailing:Text("Open",
+                        style: TextStyle(
+                          fontSize: 12,
+                        ),
+                      ),
+                    ),
+
+                  ],
+                ),
+              ),
+            ),
           ],
         ),
       ),
