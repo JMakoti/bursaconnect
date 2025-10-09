@@ -1,4 +1,7 @@
+import '/core/colors.dart';
 import 'package:flutter/material.dart';
+import '../Explore/bursary_listing.dart';
+import '../../Screens/Activity/applied_bursary_listing.dart';
 
 class UserDashboard extends StatefulWidget {
   const UserDashboard({super.key});
@@ -18,7 +21,7 @@ class _UserDashboardState extends State<UserDashboard> {
     'year': '3rd Year',
     'email': 'john.kimani@student.uonbi.ac.ke',
   };
-  
+
   final Map<String, dynamic> _bursaryStatus = {
     'status': 'Approved',
     'amount': 85000,
@@ -27,134 +30,30 @@ class _UserDashboardState extends State<UserDashboard> {
     'remainingBalance': 42500,
   };
 
-  final List<Map<String, dynamic>> _transactions = [
-    {
-      'title': 'Tuition Payment',
-      'date': 'Oct 20, 2024',
-      'amount': -25000,
-      'type': 'debit'
-    },
-    {
-      'title': 'Bursary Disbursement',
-      'date': 'Oct 15, 2024',
-      'amount': 42500,
-      'type': 'credit'
-    },
-    {
-      'title': 'Accommodation Fee',
-      'date': 'Oct 10, 2024',
-      'amount': -17500,
-      'type': 'debit'
-    },
-    {
-      'title': 'Bursary Disbursement',
-      'date': 'Sept 15, 2024',
-      'amount': 42500,
-      'type': 'credit'
-    },
-  ];
-
   final List<Map<String, dynamic>> _documents = [
     {
       'name': 'Bursary Award Letter',
       'date': 'Sept 10, 2024',
       'size': '2.4 MB',
-      'icon': Icons.description
+      'icon': Icons.description,
     },
     {
       'name': 'Fee Statement',
       'date': 'Oct 01, 2024',
       'size': '1.8 MB',
-      'icon': Icons.receipt_long
+      'icon': Icons.receipt_long,
     },
     {
       'name': 'Application Form',
       'date': 'Aug 20, 2024',
       'size': '3.1 MB',
-      'icon': Icons.assignment
+      'icon': Icons.assignment,
     },
   ];
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('My Bursary'),
-        elevation: 0,
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.notifications_outlined),
-            onPressed: () {},
-          ),
-          const SizedBox(width: 8),
-        ],
-      ),
-      drawer: _buildDrawer(),
-      body: _buildBody(),
-      bottomNavigationBar: _buildBottomNav(),
-    );
-  }
-
-  Widget _buildDrawer() {
-    return Drawer(
-      child: ListView(
-        padding: EdgeInsets.zero,
-        children: [
-          UserAccountsDrawerHeader(
-            decoration: const BoxDecoration(
-              gradient: LinearGradient(
-                colors: [Colors.indigo, Colors.indigoAccent],
-              ),
-            ),
-            currentAccountPicture: CircleAvatar(
-              backgroundColor: Colors.white,
-              child: Text(
-                _studentInfo['name'].split(' ')[0][0] +
-                    _studentInfo['name'].split(' ')[1][0],
-                style: const TextStyle(
-                  fontSize: 24,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.indigo,
-                ),
-              ),
-            ),
-            accountName: Text(_studentInfo['name']),
-            accountEmail: Text(_studentInfo['studentId']),
-          ),
-          ListTile(
-            leading: const Icon(Icons.person),
-            title: const Text('Profile'),
-            onTap: () {},
-          ),
-          ListTile(
-            leading: const Icon(Icons.history),
-            title: const Text('Application History'),
-            onTap: () {},
-          ),
-          ListTile(
-            leading: const Icon(Icons.assessment),
-            title: const Text('Reports'),
-            onTap: () {},
-          ),
-          const Divider(),
-          ListTile(
-            leading: const Icon(Icons.help_outline),
-            title: const Text('Help & Support'),
-            onTap: () {},
-          ),
-          ListTile(
-            leading: const Icon(Icons.settings),
-            title: const Text('Settings'),
-            onTap: () {},
-          ),
-          ListTile(
-            leading: const Icon(Icons.logout),
-            title: const Text('Logout'),
-            onTap: () {},
-          ),
-        ],
-      ),
-    );
+    return Scaffold(body: _buildBody(), bottomNavigationBar: _buildBottomNav());
   }
 
   Widget _buildBody() {
@@ -162,13 +61,11 @@ class _UserDashboardState extends State<UserDashboard> {
       case 0:
         return _buildHomeTab();
       case 1:
-        return _buildTransactionsTab();
+        return BursaryListing();
       case 2:
-        return _buildDocumentsTab();
-      case 3:
-        return _buildProfileTab();
+        return AppliedBursaryListing();
       default:
-        return _buildHomeTab();
+        return _buildProfileTab();
     }
   }
 
@@ -184,7 +81,7 @@ class _UserDashboardState extends State<UserDashboard> {
           const SizedBox(height: 20),
           _buildQuickActions(),
           const SizedBox(height: 20),
-          _buildRecentTransactions(),
+          // _buildRecentTransactions(),
         ],
       ),
     );
@@ -195,12 +92,12 @@ class _UserDashboardState extends State<UserDashboard> {
       padding: const EdgeInsets.all(20),
       decoration: BoxDecoration(
         gradient: const LinearGradient(
-          colors: [Colors.indigo, Colors.indigoAccent],
+          colors: [AppColors.primary,AppColors.accent],
         ),
         borderRadius: BorderRadius.circular(16),
         boxShadow: [
           BoxShadow(
-            color: Colors.indigo.withOpacity(0.3),
+            color: AppColors.primary.withValues(alpha: 0.3),
             blurRadius: 10,
             offset: const Offset(0, 4),
           ),
@@ -212,7 +109,7 @@ class _UserDashboardState extends State<UserDashboard> {
           Text(
             'Welcome back,',
             style: TextStyle(
-              color: Colors.white.withOpacity(0.9),
+              color: AppColors.background,
               fontSize: 14,
             ),
           ),
@@ -220,7 +117,7 @@ class _UserDashboardState extends State<UserDashboard> {
           Text(
             _studentInfo['name'].split(' ')[0],
             style: const TextStyle(
-              color: Colors.white,
+              color: AppColors.background,
               fontSize: 24,
               fontWeight: FontWeight.bold,
             ),
@@ -228,12 +125,12 @@ class _UserDashboardState extends State<UserDashboard> {
           const SizedBox(height: 16),
           Row(
             children: [
-              const Icon(Icons.school, color: Colors.white, size: 18),
+              const Icon(Icons.school, color: AppColors.background, size: 18),
               const SizedBox(width: 8),
               Expanded(
                 child: Text(
                   _studentInfo['institution'],
-                  style: const TextStyle(color: Colors.white, fontSize: 13),
+                  style: const TextStyle(color: AppColors.background, fontSize: 13),
                 ),
               ),
             ],
@@ -241,12 +138,12 @@ class _UserDashboardState extends State<UserDashboard> {
           const SizedBox(height: 8),
           Row(
             children: [
-              const Icon(Icons.book, color: Colors.white, size: 18),
+              const Icon(Icons.book, color: AppColors.background, size: 18),
               const SizedBox(width: 8),
               Expanded(
                 child: Text(
                   '${_studentInfo['course']} • ${_studentInfo['year']}',
-                  style: const TextStyle(color: Colors.white, fontSize: 13),
+                  style: const TextStyle(color:AppColors.background, fontSize: 13),
                 ),
               ),
             ],
@@ -259,19 +156,19 @@ class _UserDashboardState extends State<UserDashboard> {
   Widget _buildBursaryStatusCard() {
     final status = _bursaryStatus['status'];
     final statusColor = status == 'Approved'
-        ? Colors.green
+        ? AppColors.success
         : status == 'Pending'
-            ? Colors.orange
-            : Colors.red;
+        ? AppColors.secondaryText
+        : AppColors.error;
 
     return Container(
       padding: const EdgeInsets.all(20),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: AppColors.background,
         borderRadius: BorderRadius.circular(16),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.05),
+            color: AppColors.secondaryText.withValues(alpha: 0.3),
             blurRadius: 10,
             offset: const Offset(0, 4),
           ),
@@ -285,10 +182,7 @@ class _UserDashboardState extends State<UserDashboard> {
             children: [
               const Text(
                 'Bursary Status',
-                style: TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold,
-                ),
+                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
               ),
               Container(
                 padding: const EdgeInsets.symmetric(
@@ -326,11 +220,7 @@ class _UserDashboardState extends State<UserDashboard> {
                   Icons.account_balance_wallet,
                 ),
               ),
-              Container(
-                height: 50,
-                width: 1,
-                color: Colors.grey[300],
-              ),
+              Container(height: 50, width: 1, color: AppColors.secondaryText.withValues(alpha: 0.3)),
               Expanded(
                 child: _buildInfoColumn(
                   'Balance',
@@ -343,11 +233,17 @@ class _UserDashboardState extends State<UserDashboard> {
           const SizedBox(height: 16),
           const Divider(),
           const SizedBox(height: 16),
-          _buildInfoRow(Icons.calendar_today, 'Semester',
-              _bursaryStatus['semester']),
+          _buildInfoRow(
+            Icons.calendar_today,
+            'Semester',
+            _bursaryStatus['semester'],
+          ),
           const SizedBox(height: 12),
-          _buildInfoRow(Icons.payment, 'Next Disbursement',
-              _bursaryStatus['disbursementDate']),
+          _buildInfoRow(
+            Icons.payment,
+            'Next Disbursement',
+            _bursaryStatus['disbursementDate'],
+          ),
         ],
       ),
     );
@@ -356,22 +252,13 @@ class _UserDashboardState extends State<UserDashboard> {
   Widget _buildInfoColumn(String label, String value, IconData icon) {
     return Column(
       children: [
-        Icon(icon, color: Colors.indigo, size: 28),
+        Icon(icon, color: AppColors.primary, size: 28),
         const SizedBox(height: 8),
-        Text(
-          label,
-          style: TextStyle(
-            fontSize: 12,
-            color: Colors.grey[600],
-          ),
-        ),
+        Text(label, style: TextStyle(fontSize: 12, color: Colors.grey[600])),
         const SizedBox(height: 4),
         Text(
           value,
-          style: const TextStyle(
-            fontSize: 16,
-            fontWeight: FontWeight.bold,
-          ),
+          style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
         ),
       ],
     );
@@ -380,22 +267,13 @@ class _UserDashboardState extends State<UserDashboard> {
   Widget _buildInfoRow(IconData icon, String label, String value) {
     return Row(
       children: [
-        Icon(icon, size: 20, color: Colors.grey[600]),
+        Icon(icon, size: 20, color: AppColors.secondaryText),
         const SizedBox(width: 12),
-        Text(
-          label,
-          style: TextStyle(
-            fontSize: 14,
-            color: Colors.grey[600],
-          ),
-        ),
+        Text(label, style: TextStyle(fontSize: 14, color: AppColors.secondaryText)),
         const Spacer(),
         Text(
           value,
-          style: const TextStyle(
-            fontSize: 14,
-            fontWeight: FontWeight.w600,
-          ),
+          style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w600),
         ),
       ],
     );
@@ -407,10 +285,7 @@ class _UserDashboardState extends State<UserDashboard> {
       children: [
         const Text(
           'Quick Actions',
-          style: TextStyle(
-            fontSize: 18,
-            fontWeight: FontWeight.bold,
-          ),
+          style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
         ),
         const SizedBox(height: 12),
         Row(
@@ -419,7 +294,7 @@ class _UserDashboardState extends State<UserDashboard> {
               child: _buildActionCard(
                 'Apply for Bursary',
                 Icons.add_circle_outline,
-                Colors.blue,
+               AppColors.secondaryText
               ),
             ),
             const SizedBox(width: 12),
@@ -427,7 +302,7 @@ class _UserDashboardState extends State<UserDashboard> {
               child: _buildActionCard(
                 'View Documents',
                 Icons.folder_open,
-                Colors.orange,
+                AppColors.error
               ),
             ),
           ],
@@ -439,7 +314,7 @@ class _UserDashboardState extends State<UserDashboard> {
               child: _buildActionCard(
                 'Download Receipt',
                 Icons.download,
-                Colors.green,
+                AppColors.success
               ),
             ),
             const SizedBox(width: 12),
@@ -447,7 +322,7 @@ class _UserDashboardState extends State<UserDashboard> {
               child: _buildActionCard(
                 'Contact Support',
                 Icons.support_agent,
-                Colors.purple,
+                AppColors.primary,
               ),
             ),
           ],
@@ -462,11 +337,11 @@ class _UserDashboardState extends State<UserDashboard> {
       child: Container(
         padding: const EdgeInsets.all(16),
         decoration: BoxDecoration(
-          color: Colors.white,
+          color: AppColors.background,
           borderRadius: BorderRadius.circular(12),
           boxShadow: [
             BoxShadow(
-              color: Colors.black.withOpacity(0.05),
+              color: AppColors.secondaryText.withValues(alpha: 0.3),
               blurRadius: 10,
               offset: const Offset(0, 4),
             ),
@@ -479,145 +354,10 @@ class _UserDashboardState extends State<UserDashboard> {
             Text(
               title,
               textAlign: TextAlign.center,
-              style: const TextStyle(
-                fontSize: 13,
-                fontWeight: FontWeight.w600,
-              ),
+              style: const TextStyle(fontSize: 13, fontWeight: FontWeight.w600),
             ),
           ],
         ),
-      ),
-    );
-  }
-
-  Widget _buildRecentTransactions() {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            const Text(
-              'Recent Transactions',
-              style: TextStyle(
-                fontSize: 18,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-            TextButton(
-              onPressed: () {
-                setState(() {
-                  _selectedIndex = 1;
-                });
-              },
-              child: const Text('View All'),
-            ),
-          ],
-        ),
-        const SizedBox(height: 12),
-        ListView.builder(
-          shrinkWrap: true,
-          physics: const NeverScrollableScrollPhysics(),
-          itemCount: 3,
-          itemBuilder: (context, index) {
-            final transaction = _transactions[index];
-            return _buildTransactionItem(transaction);
-          },
-        ),
-      ],
-    );
-  }
-
-  Widget _buildTransactionsTab() {
-    return SingleChildScrollView(
-      padding: const EdgeInsets.all(16),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          const Text(
-            'All Transactions',
-            style: TextStyle(
-              fontSize: 22,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-          const SizedBox(height: 16),
-          ListView.builder(
-            shrinkWrap: true,
-            physics: const NeverScrollableScrollPhysics(),
-            itemCount: _transactions.length,
-            itemBuilder: (context, index) {
-              return _buildTransactionItem(_transactions[index]);
-            },
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildTransactionItem(Map<String, dynamic> transaction) {
-    final isCredit = transaction['type'] == 'credit';
-    return Container(
-      margin: const EdgeInsets.only(bottom: 12),
-      padding: const EdgeInsets.all(16),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(12),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withOpacity(0.05),
-            blurRadius: 10,
-            offset: const Offset(0, 4),
-          ),
-        ],
-      ),
-      child: Row(
-        children: [
-          Container(
-            padding: const EdgeInsets.all(10),
-            decoration: BoxDecoration(
-              color: isCredit
-                  ? Colors.green.withOpacity(0.1)
-                  : Colors.red.withOpacity(0.1),
-              borderRadius: BorderRadius.circular(10),
-            ),
-            child: Icon(
-              isCredit ? Icons.arrow_downward : Icons.arrow_upward,
-              color: isCredit ? Colors.green : Colors.red,
-            ),
-          ),
-          const SizedBox(width: 12),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  transaction['title'],
-                  style: const TextStyle(
-                    fontWeight: FontWeight.w600,
-                    fontSize: 15,
-                  ),
-                ),
-                const SizedBox(height: 4),
-                Text(
-                  transaction['date'],
-                  style: TextStyle(
-                    fontSize: 13,
-                    color: Colors.grey[600],
-                  ),
-                ),
-              ],
-            ),
-          ),
-          Text(
-            '${isCredit ? '+' : ''}KES ${transaction['amount'].abs()}',
-            style: TextStyle(
-              fontSize: 16,
-              fontWeight: FontWeight.bold,
-              color: isCredit ? Colors.green : Colors.red,
-            ),
-          ),
-        ],
       ),
     );
   }
@@ -630,10 +370,7 @@ class _UserDashboardState extends State<UserDashboard> {
         children: [
           const Text(
             'My Documents',
-            style: TextStyle(
-              fontSize: 22,
-              fontWeight: FontWeight.bold,
-            ),
+            style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
           ),
           const SizedBox(height: 16),
           ListView.builder(
@@ -646,11 +383,11 @@ class _UserDashboardState extends State<UserDashboard> {
                 margin: const EdgeInsets.only(bottom: 12),
                 padding: const EdgeInsets.all(16),
                 decoration: BoxDecoration(
-                  color: Colors.white,
+                  color: AppColors.background,
                   borderRadius: BorderRadius.circular(12),
                   boxShadow: [
                     BoxShadow(
-                      color: Colors.black.withOpacity(0.05),
+                      color: AppColors.secondaryText.withValues(alpha: 0.5),
                       blurRadius: 10,
                       offset: const Offset(0, 4),
                     ),
@@ -661,10 +398,10 @@ class _UserDashboardState extends State<UserDashboard> {
                     Container(
                       padding: const EdgeInsets.all(12),
                       decoration: BoxDecoration(
-                        color: Colors.indigo.withOpacity(0.1),
+                        color: AppColors.accent.withValues(alpha: 0.1),
                         borderRadius: BorderRadius.circular(10),
                       ),
-                      child: Icon(doc['icon'], color: Colors.indigo),
+                      child: Icon(doc['icon'], color: AppColors.primary),
                     ),
                     const SizedBox(width: 12),
                     Expanded(
@@ -683,7 +420,7 @@ class _UserDashboardState extends State<UserDashboard> {
                             '${doc['date']} • ${doc['size']}',
                             style: TextStyle(
                               fontSize: 13,
-                              color: Colors.grey[600],
+                              color: AppColors.secondaryText,
                             ),
                           ),
                         ],
@@ -691,7 +428,7 @@ class _UserDashboardState extends State<UserDashboard> {
                     ),
                     IconButton(
                       icon: const Icon(Icons.download),
-                      color: Colors.indigo,
+                      color: AppColors.primary,
                       onPressed: () {},
                     ),
                   ],
@@ -711,23 +448,17 @@ class _UserDashboardState extends State<UserDashboard> {
         children: [
           const CircleAvatar(
             radius: 50,
-            backgroundColor: Colors.indigo,
-            child: Icon(Icons.person, size: 50, color: Colors.white),
+            backgroundColor: AppColors.primary,
+            child: Icon(Icons.person, size: 50, color:AppColors.background),
           ),
           const SizedBox(height: 16),
           Text(
             _studentInfo['name'],
-            style: const TextStyle(
-              fontSize: 22,
-              fontWeight: FontWeight.bold,
-            ),
+            style: const TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
           ),
           Text(
             _studentInfo['studentId'],
-            style: TextStyle(
-              fontSize: 14,
-              color: Colors.grey[600],
-            ),
+            style: TextStyle(fontSize: 14, color: AppColors.secondaryText),
           ),
           const SizedBox(height: 24),
           _buildProfileCard(),
@@ -740,11 +471,11 @@ class _UserDashboardState extends State<UserDashboard> {
     return Container(
       padding: const EdgeInsets.all(20),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: AppColors.background,
         borderRadius: BorderRadius.circular(16),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.05),
+            color: AppColors.secondaryText,
             blurRadius: 10,
             offset: const Offset(0, 4),
           ),
@@ -752,14 +483,20 @@ class _UserDashboardState extends State<UserDashboard> {
       ),
       child: Column(
         children: [
-          _buildProfileRow(Icons.school, 'Institution',
-              _studentInfo['institution']),
+          _buildProfileRow(
+            Icons.school,
+            'Institution',
+            _studentInfo['institution'],
+          ),
           const Divider(height: 24),
           _buildProfileRow(Icons.book, 'Course', _studentInfo['course']),
           const Divider(height: 24),
           _buildProfileRow(Icons.grade, 'Year', _studentInfo['year']),
           const Divider(height: 24),
           _buildProfileRow(Icons.email, 'Email', _studentInfo['email']),
+
+          const Divider(height: 24),
+          _buildDocumentsTab(),
         ],
       ),
     );
@@ -768,7 +505,7 @@ class _UserDashboardState extends State<UserDashboard> {
   Widget _buildProfileRow(IconData icon, String label, String value) {
     return Row(
       children: [
-        Icon(icon, color: Colors.indigo),
+        Icon(icon, color: AppColors.primary),
         const SizedBox(width: 16),
         Expanded(
           child: Column(
@@ -776,10 +513,7 @@ class _UserDashboardState extends State<UserDashboard> {
             children: [
               Text(
                 label,
-                style: TextStyle(
-                  fontSize: 12,
-                  color: Colors.grey[600],
-                ),
+                style: TextStyle(fontSize: 12, color: AppColors.secondaryText),
               ),
               const SizedBox(height: 4),
               Text(
@@ -805,21 +539,12 @@ class _UserDashboardState extends State<UserDashboard> {
         });
       },
       type: BottomNavigationBarType.fixed,
-      selectedItemColor: Colors.indigo,
-      unselectedItemColor: Colors.grey,
+      selectedItemColor: AppColors.primary,
+      unselectedItemColor: AppColors.secondaryText,
       items: const [
-        BottomNavigationBarItem(
-          icon: Icon(Icons.home),
-          label: 'Home',
-        ),
-        BottomNavigationBarItem(
-          icon: Icon(Icons.explore),
-          label: 'Explore',
-        ),
-        BottomNavigationBarItem(
-          icon: Icon(Icons.folder),
-          label: 'Activities',
-        ),
+        BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
+        BottomNavigationBarItem(icon: Icon(Icons.explore), label: 'Explore'),
+        BottomNavigationBarItem(icon: Icon(Icons.folder), label: 'Activities'),
         BottomNavigationBarItem(
           icon: Icon(Icons.local_activity),
           label: 'Profile',
