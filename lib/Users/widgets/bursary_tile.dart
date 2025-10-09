@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../../core/colors.dart';
+import '../../core/colors/colors.dart';
 import '../Models/bursary.dart';
 import './action_btn.dart';
 import './container.dart';

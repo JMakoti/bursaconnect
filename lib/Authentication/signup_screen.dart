@@ -3,8 +3,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import './login_screen.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import '../Services/auth_service.dart';
-import '../../core/colors.dart';
+import '../core/Services/auth_service.dart';
+import '../core/colors/colors.dart';
 
 class SignupScreen extends StatefulWidget {
   const SignupScreen({super.key});

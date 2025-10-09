@@ -1,7 +1,8 @@
-import '/core/colors.dart';
+import '../../../core/colors/colors.dart';
 import 'package:flutter/material.dart';
 import '../Explore/bursary_listing.dart';
 import '../../Screens/Activity/applied_bursary_listing.dart';
+import '../Profile/profile.dart';
 
 class UserDashboard extends StatefulWidget {
   const UserDashboard({super.key});
@@ -30,26 +31,26 @@ class _UserDashboardState extends State<UserDashboard> {
     'remainingBalance': 42500,
   };
 
-  final List<Map<String, dynamic>> _documents = [
-    {
-      'name': 'Bursary Award Letter',
-      'date': 'Sept 10, 2024',
-      'size': '2.4 MB',
-      'icon': Icons.description,
-    },
-    {
-      'name': 'Fee Statement',
-      'date': 'Oct 01, 2024',
-      'size': '1.8 MB',
-      'icon': Icons.receipt_long,
-    },
-    {
-      'name': 'Application Form',
-      'date': 'Aug 20, 2024',
-      'size': '3.1 MB',
-      'icon': Icons.assignment,
-    },
-  ];
+  // final List<Map<String, dynamic>> _documents = [
+  //   {
+  //     'name': 'Bursary Award Letter',
+  //     'date': 'Sept 10, 2024',
+  //     'size': '2.4 MB',
+  //     'icon': Icons.description,
+  //   },
+  //   {
+  //     'name': 'Fee Statement',
+  //     'date': 'Oct 01, 2024',
+  //     'size': '1.8 MB',
+  //     'icon': Icons.receipt_long,
+  //   },
+  //   {
+  //     'name': 'Application Form',
+  //     'date': 'Aug 20, 2024',
+  //     'size': '3.1 MB',
+  //     'icon': Icons.assignment,
+  //   },
+  // ];
 
   @override
   Widget build(BuildContext context) {
@@ -65,7 +66,7 @@ class _UserDashboardState extends State<UserDashboard> {
       case 2:
         return AppliedBursaryListing();
       default:
-        return _buildProfileTab();
+        return Profile();
     }
   }
 
@@ -92,7 +93,7 @@ class _UserDashboardState extends State<UserDashboard> {
       padding: const EdgeInsets.all(20),
       decoration: BoxDecoration(
         gradient: const LinearGradient(
-          colors: [AppColors.primary,AppColors.accent],
+          colors: [AppColors.primary, AppColors.accent],
         ),
         borderRadius: BorderRadius.circular(16),
         boxShadow: [
@@ -108,10 +109,7 @@ class _UserDashboardState extends State<UserDashboard> {
         children: [
           Text(
             'Welcome back,',
-            style: TextStyle(
-              color: AppColors.background,
-              fontSize: 14,
-            ),
+            style: TextStyle(color: AppColors.background, fontSize: 14),
           ),
           const SizedBox(height: 4),
           Text(
@@ -130,7 +128,10 @@ class _UserDashboardState extends State<UserDashboard> {
               Expanded(
                 child: Text(
                   _studentInfo['institution'],
-                  style: const TextStyle(color: AppColors.background, fontSize: 13),
+                  style: const TextStyle(
+                    color: AppColors.background,
+                    fontSize: 13,
+                  ),
                 ),
               ),
             ],
@@ -143,7 +144,10 @@ class _UserDashboardState extends State<UserDashboard> {
               Expanded(
                 child: Text(
                   '${_studentInfo['course']} • ${_studentInfo['year']}',
-                  style: const TextStyle(color:AppColors.background, fontSize: 13),
+                  style: const TextStyle(
+                    color: AppColors.background,
+                    fontSize: 13,
+                  ),
                 ),
               ),
             ],
@@ -190,7 +194,7 @@ class _UserDashboardState extends State<UserDashboard> {
                   vertical: 6,
                 ),
                 decoration: BoxDecoration(
-                  color: statusColor.withOpacity(0.1),
+                  color: statusColor.withValues(alpha: 0.1),
                   borderRadius: BorderRadius.circular(20),
                 ),
                 child: Row(
@@ -220,7 +224,11 @@ class _UserDashboardState extends State<UserDashboard> {
                   Icons.account_balance_wallet,
                 ),
               ),
-              Container(height: 50, width: 1, color: AppColors.secondaryText.withValues(alpha: 0.3)),
+              Container(
+                height: 50,
+                width: 1,
+                color: AppColors.secondaryText.withValues(alpha: 0.3),
+              ),
               Expanded(
                 child: _buildInfoColumn(
                   'Balance',
@@ -269,7 +277,10 @@ class _UserDashboardState extends State<UserDashboard> {
       children: [
         Icon(icon, size: 20, color: AppColors.secondaryText),
         const SizedBox(width: 12),
-        Text(label, style: TextStyle(fontSize: 14, color: AppColors.secondaryText)),
+        Text(
+          label,
+          style: TextStyle(fontSize: 14, color: AppColors.secondaryText),
+        ),
         const Spacer(),
         Text(
           value,
@@ -292,17 +303,29 @@ class _UserDashboardState extends State<UserDashboard> {
           children: [
             Expanded(
               child: _buildActionCard(
-                'Apply for Bursary',
-                Icons.add_circle_outline,
-               AppColors.secondaryText
+                title: 'Apply for Bursary',
+                icon: Icons.add_circle_outline,
+                color: AppColors.secondaryText,
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (_) => const BursaryListing()),
+                  );
+                },
               ),
             ),
             const SizedBox(width: 12),
             Expanded(
               child: _buildActionCard(
-                'View Documents',
-                Icons.folder_open,
-                AppColors.error
+                title: 'View Documents',
+                icon: Icons.folder_open,
+                color: AppColors.error,
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (_) => const BursaryListing()),
+                  );
+                },
               ),
             ),
           ],
@@ -312,17 +335,29 @@ class _UserDashboardState extends State<UserDashboard> {
           children: [
             Expanded(
               child: _buildActionCard(
-                'Download Receipt',
-                Icons.download,
-                AppColors.success
+                title: 'Download Receipt',
+                icon: Icons.download,
+                color: AppColors.success,
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (_) => const BursaryListing()),
+                  );
+                },
               ),
             ),
             const SizedBox(width: 12),
             Expanded(
               child: _buildActionCard(
-                'Contact Support',
-                Icons.support_agent,
-                AppColors.primary,
+                title: 'Contact Support',
+                icon: Icons.support_agent,
+                color: AppColors.primary,
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (_) => const BursaryListing()),
+                  );
+                },
               ),
             ),
           ],
@@ -331,9 +366,14 @@ class _UserDashboardState extends State<UserDashboard> {
     );
   }
 
-  Widget _buildActionCard(String title, IconData icon, Color color) {
+  Widget _buildActionCard({
+    required String title,
+    required IconData icon,
+    required Color color,
+    required VoidCallback onTap,
+  }) {
     return InkWell(
-      onTap: () {},
+      onTap: onTap,
       child: Container(
         padding: const EdgeInsets.all(16),
         decoration: BoxDecoration(
@@ -362,173 +402,173 @@ class _UserDashboardState extends State<UserDashboard> {
     );
   }
 
-  Widget _buildDocumentsTab() {
-    return SingleChildScrollView(
-      padding: const EdgeInsets.all(16),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          const Text(
-            'My Documents',
-            style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
-          ),
-          const SizedBox(height: 16),
-          ListView.builder(
-            shrinkWrap: true,
-            physics: const NeverScrollableScrollPhysics(),
-            itemCount: _documents.length,
-            itemBuilder: (context, index) {
-              final doc = _documents[index];
-              return Container(
-                margin: const EdgeInsets.only(bottom: 12),
-                padding: const EdgeInsets.all(16),
-                decoration: BoxDecoration(
-                  color: AppColors.background,
-                  borderRadius: BorderRadius.circular(12),
-                  boxShadow: [
-                    BoxShadow(
-                      color: AppColors.secondaryText.withValues(alpha: 0.5),
-                      blurRadius: 10,
-                      offset: const Offset(0, 4),
-                    ),
-                  ],
-                ),
-                child: Row(
-                  children: [
-                    Container(
-                      padding: const EdgeInsets.all(12),
-                      decoration: BoxDecoration(
-                        color: AppColors.accent.withValues(alpha: 0.1),
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      child: Icon(doc['icon'], color: AppColors.primary),
-                    ),
-                    const SizedBox(width: 12),
-                    Expanded(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            doc['name'],
-                            style: const TextStyle(
-                              fontWeight: FontWeight.w600,
-                              fontSize: 15,
-                            ),
-                          ),
-                          const SizedBox(height: 4),
-                          Text(
-                            '${doc['date']} • ${doc['size']}',
-                            style: TextStyle(
-                              fontSize: 13,
-                              color: AppColors.secondaryText,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    IconButton(
-                      icon: const Icon(Icons.download),
-                      color: AppColors.primary,
-                      onPressed: () {},
-                    ),
-                  ],
-                ),
-              );
-            },
-          ),
-        ],
-      ),
-    );
-  }
+  // Widget _buildDocumentsTab() {
+  //   return SingleChildScrollView(
+  //     padding: const EdgeInsets.all(16),
+  //     child: Column(
+  //       crossAxisAlignment: CrossAxisAlignment.start,
+  //       children: [
+  //         const Text(
+  //           'My Documents',
+  //           style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
+  //         ),
+  //         const SizedBox(height: 16),
+  //         ListView.builder(
+  //           shrinkWrap: true,
+  //           physics: const NeverScrollableScrollPhysics(),
+  //           itemCount: _documents.length,
+  //           itemBuilder: (context, index) {
+  //             final doc = _documents[index];
+  //             return Container(
+  //               margin: const EdgeInsets.only(bottom: 12),
+  //               padding: const EdgeInsets.all(16),
+  //               decoration: BoxDecoration(
+  //                 color: AppColors.background,
+  //                 borderRadius: BorderRadius.circular(12),
+  //                 boxShadow: [
+  //                   BoxShadow(
+  //                     color: AppColors.secondaryText.withValues(alpha: 0.5),
+  //                     blurRadius: 10,
+  //                     offset: const Offset(0, 4),
+  //                   ),
+  //                 ],
+  //               ),
+  //               child: Row(
+  //                 children: [
+  //                   Container(
+  //                     padding: const EdgeInsets.all(12),
+  //                     decoration: BoxDecoration(
+  //                       color: AppColors.accent.withValues(alpha: 0.1),
+  //                       borderRadius: BorderRadius.circular(10),
+  //                     ),
+  //                     child: Icon(doc['icon'], color: AppColors.primary),
+  //                   ),
+  //                   const SizedBox(width: 12),
+  //                   Expanded(
+  //                     child: Column(
+  //                       crossAxisAlignment: CrossAxisAlignment.start,
+  //                       children: [
+  //                         Text(
+  //                           doc['name'],
+  //                           style: const TextStyle(
+  //                             fontWeight: FontWeight.w600,
+  //                             fontSize: 15,
+  //                           ),
+  //                         ),
+  //                         const SizedBox(height: 4),
+  //                         Text(
+  //                           '${doc['date']} • ${doc['size']}',
+  //                           style: TextStyle(
+  //                             fontSize: 13,
+  //                             color: AppColors.secondaryText,
+  //                           ),
+  //                         ),
+  //                       ],
+  //                     ),
+  //                   ),
+  //                   IconButton(
+  //                     icon: const Icon(Icons.download),
+  //                     color: AppColors.primary,
+  //                     onPressed: () {},
+  //                   ),
+  //                 ],
+  //               ),
+  //             );
+  //           },
+  //         ),
+  //       ],
+  //     ),
+  //   );
+  // }
 
-  Widget _buildProfileTab() {
-    return SingleChildScrollView(
-      padding: const EdgeInsets.all(16),
-      child: Column(
-        children: [
-          const CircleAvatar(
-            radius: 50,
-            backgroundColor: AppColors.primary,
-            child: Icon(Icons.person, size: 50, color:AppColors.background),
-          ),
-          const SizedBox(height: 16),
-          Text(
-            _studentInfo['name'],
-            style: const TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
-          ),
-          Text(
-            _studentInfo['studentId'],
-            style: TextStyle(fontSize: 14, color: AppColors.secondaryText),
-          ),
-          const SizedBox(height: 24),
-          _buildProfileCard(),
-        ],
-      ),
-    );
-  }
+  // Widget _buildProfileTab() {
+  //   return SingleChildScrollView(
+  //     padding: const EdgeInsets.all(16),
+  //     child: Column(
+  //       children: [
+  //         const CircleAvatar(
+  //           radius: 50,
+  //           backgroundColor: AppColors.primary,
+  //           child: Icon(Icons.person, size: 50, color: AppColors.background),
+  //         ),
+  //         const SizedBox(height: 16),
+  //         Text(
+  //           _studentInfo['name'],
+  //           style: const TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
+  //         ),
+  //         Text(
+  //           _studentInfo['studentId'],
+  //           style: TextStyle(fontSize: 14, color: AppColors.secondaryText),
+  //         ),
+  //         const SizedBox(height: 24),
+  //         _buildProfileCard(),
+  //       ],
+  //     ),
+  //   );
+  // }
 
-  Widget _buildProfileCard() {
-    return Container(
-      padding: const EdgeInsets.all(20),
-      decoration: BoxDecoration(
-        color: AppColors.background,
-        borderRadius: BorderRadius.circular(16),
-        boxShadow: [
-          BoxShadow(
-            color: AppColors.secondaryText,
-            blurRadius: 10,
-            offset: const Offset(0, 4),
-          ),
-        ],
-      ),
-      child: Column(
-        children: [
-          _buildProfileRow(
-            Icons.school,
-            'Institution',
-            _studentInfo['institution'],
-          ),
-          const Divider(height: 24),
-          _buildProfileRow(Icons.book, 'Course', _studentInfo['course']),
-          const Divider(height: 24),
-          _buildProfileRow(Icons.grade, 'Year', _studentInfo['year']),
-          const Divider(height: 24),
-          _buildProfileRow(Icons.email, 'Email', _studentInfo['email']),
+  // Widget _buildProfileCard() {
+  //   return Container(
+  //     padding: const EdgeInsets.all(20),
+  //     decoration: BoxDecoration(
+  //       color: AppColors.background,
+  //       borderRadius: BorderRadius.circular(16),
+  //       boxShadow: [
+  //         BoxShadow(
+  //           color: AppColors.secondaryText,
+  //           blurRadius: 10,
+  //           offset: const Offset(0, 4),
+  //         ),
+  //       ],
+  //     ),
+  //     child: Column(
+  //       children: [
+  //         _buildProfileRow(
+  //           Icons.school,
+  //           'Institution',
+  //           _studentInfo['institution'],
+  //         ),
+  //         const Divider(height: 24),
+  //         _buildProfileRow(Icons.book, 'Course', _studentInfo['course']),
+  //         const Divider(height: 24),
+  //         _buildProfileRow(Icons.grade, 'Year', _studentInfo['year']),
+  //         const Divider(height: 24),
+  //         _buildProfileRow(Icons.email, 'Email', _studentInfo['email']),
 
-          const Divider(height: 24),
-          _buildDocumentsTab(),
-        ],
-      ),
-    );
-  }
+  //         const Divider(height: 24),
+  //         _buildDocumentsTab(),
+  //       ],
+  //     ),
+  //   );
+  // }
 
-  Widget _buildProfileRow(IconData icon, String label, String value) {
-    return Row(
-      children: [
-        Icon(icon, color: AppColors.primary),
-        const SizedBox(width: 16),
-        Expanded(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                label,
-                style: TextStyle(fontSize: 12, color: AppColors.secondaryText),
-              ),
-              const SizedBox(height: 4),
-              Text(
-                value,
-                style: const TextStyle(
-                  fontSize: 15,
-                  fontWeight: FontWeight.w600,
-                ),
-              ),
-            ],
-          ),
-        ),
-      ],
-    );
-  }
+  // Widget _buildProfileRow(IconData icon, String label, String value) {
+  //   return Row(
+  //     children: [
+  //       Icon(icon, color: AppColors.primary),
+  //       const SizedBox(width: 16),
+  //       Expanded(
+  //         child: Column(
+  //           crossAxisAlignment: CrossAxisAlignment.start,
+  //           children: [
+  //             Text(
+  //               label,
+  //               style: TextStyle(fontSize: 12, color: AppColors.secondaryText),
+  //             ),
+  //             const SizedBox(height: 4),
+  //             Text(
+  //               value,
+  //               style: const TextStyle(
+  //                 fontSize: 15,
+  //                 fontWeight: FontWeight.w600,
+  //               ),
+  //             ),
+  //           ],
+  //         ),
+  //       ),
+  //     ],
+  //   );
+  // }
 
   Widget _buildBottomNav() {
     return BottomNavigationBar(

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../../../core/colors.dart'; // Adjust the path to where your colors.dart is located
+import '../../../core/colors/colors.dart'; // Adjust the path to where your colors.dart is located
 import '../../widgets/bursary_tile.dart';
 import '../../Data/dummy_bursaries.dart';
 import 'bursary_details.dart';
@@ -29,6 +29,7 @@ class BursaryListing extends StatelessWidget {
           style: TextStyle(color: AppColors.background, fontWeight: FontWeight.bold),
         ),
         backgroundColor: AppColors.primary,
+        automaticallyImplyLeading: false,
         elevation: 2,
       ),
       body: SingleChildScrollView(

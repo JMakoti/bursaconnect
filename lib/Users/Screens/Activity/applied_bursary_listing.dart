@@ -1,6 +1,6 @@
 import 'package:bursaconnect/Users/widgets/applied_bursary_tile.dart';
 import 'package:flutter/material.dart';
-import '../../../core/colors.dart'; // Adjust the path to where your colors.dart is located
+import '../../../core/colors/colors.dart'; // Adjust the path to where your colors.dart is located
 import '../../Data/dummy_bursaries.dart';
 // import 'bursary_details.dart';
 
@@ -24,6 +24,8 @@ class AppliedBursaryListing extends StatelessWidget {
         ),
         backgroundColor: AppColors.primary,
         elevation: 2,
+        automaticallyImplyLeading: false,
+
       ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16.0),
