@@ -1,4 +1,3 @@
-// lib/screens/profile/profile.dart
 import 'package:flutter/material.dart';
 import '../../../core/colors/colors.dart';
 import '../../Data/mock_student.dart';
@@ -14,11 +13,15 @@ class Profile extends StatefulWidget {
 
 class _ProfileState extends State<Profile> {
   late Student student;
+  late Map<String, dynamic> user;
+  late Map<String, dynamic> bursary;
 
   @override
   void initState() {
     super.initState();
     student = mockStudent;
+    user = mockUser;
+    bursary = mockBursary;
   }
 
   void _openEditStepper() async {
@@ -48,20 +51,12 @@ class _ProfileState extends State<Profile> {
         backgroundColor: AppColors.primary,
         actions: [
           IconButton(
-  icon: const Icon(Icons.edit, color: AppColors.background),
-  onPressed: _openEditStepper,
-),
-
+            icon: const Icon(Icons.edit, color: AppColors.background),
+            onPressed: _openEditStepper,
+          ),
         ],
       ),
       body: _buildProfileTab(),
-      floatingActionButton: FloatingActionButton(
-        backgroundColor: AppColors.primary,
-        child: const Icon(Icons.add),
-        onPressed: () {
-          // optional: add quick action
-        },
-      ),
     );
   }
 
@@ -77,11 +72,11 @@ class _ProfileState extends State<Profile> {
           ),
           const SizedBox(height: 16),
           Text(
-            student.fullName,
+            user["fullName"],
             style: const TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
           ),
           Text(
-            student.studentId,
+            user["email"],
             style: TextStyle(fontSize: 14, color: AppColors.secondaryText),
           ),
           const SizedBox(height: 24),
@@ -107,19 +102,15 @@ class _ProfileState extends State<Profile> {
       ),
       child: Column(
         children: [
-          _buildProfileRow(
-            Icons.school,
-            'Institution',
-            student.educationInfo.institution,
-          ),
+          _buildProfileRow(Icons.school, 'Institution', student.educationInfo.institution),
           const Divider(height: 24),
           _buildProfileRow(Icons.book, 'Course', student.educationInfo.course),
           const Divider(height: 24),
           _buildProfileRow(Icons.grade, 'Year', student.educationInfo.year),
           const Divider(height: 24),
-          _buildProfileRow(Icons.email, 'Email', student.email),
+          _buildProfileRow(Icons.person, 'Guardian', student.guardianName ?? 'N/A'),
           const Divider(height: 24),
-          _buildBursaryInfo(),
+          _buildProfileRow(Icons.phone, 'Guardian Phone', student.guardianPhone ?? 'N/A'),
           const Divider(height: 24),
           _buildDocumentsTab(),
         ],
@@ -136,69 +127,16 @@ class _ProfileState extends State<Profile> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(
-                label,
-                style: TextStyle(fontSize: 12, color: AppColors.secondaryText),
-              ),
+              Text(label,
+                  style: TextStyle(fontSize: 12, color: AppColors.secondaryText)),
               const SizedBox(height: 4),
-              Text(
-                value,
-                style: const TextStyle(
-                  fontSize: 15,
-                  fontWeight: FontWeight.w600,
-                ),
-              ),
+              Text(value,
+                  style: const TextStyle(
+                      fontSize: 15, fontWeight: FontWeight.w600)),
             ],
           ),
         ),
       ],
-    );
-  }
-
-  Widget _buildBursaryInfo() {
-    final bursary = student.bursaryInfo;
-    return Container(
-      padding: const EdgeInsets.all(12),
-      decoration: BoxDecoration(
-        color: AppColors.accent.withValues(alpha: 0.05),
-        borderRadius: BorderRadius.circular(12),
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          const Text(
-            'Bursary Information',
-            style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-          ),
-          const SizedBox(height: 10),
-          _buildProfileRow(
-            Icons.attach_money,
-            'Amount Requested',
-            'Ksh ${bursary.amountRequested.toStringAsFixed(0)}',
-          ),
-          const SizedBox(height: 6),
-          _buildProfileRow(
-            Icons.payments,
-            'Amount Received',
-            'Ksh ${bursary.amountReceived.toStringAsFixed(0)}',
-          ),
-          const SizedBox(height: 6),
-          Row(
-            children: [
-              const Icon(Icons.info_outline, color: Colors.grey),
-              const SizedBox(width: 12),
-              Text(
-                bursary.status,
-                style: TextStyle(
-                  color: bursary.statusColor,
-                  fontSize: 15,
-                  fontWeight: FontWeight.w600,
-                ),
-              ),
-            ],
-          ),
-        ],
-      ),
     );
   }
 

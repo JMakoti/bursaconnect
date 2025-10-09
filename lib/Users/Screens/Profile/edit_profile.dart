@@ -1,9 +1,7 @@
-
-
 import 'package:flutter/material.dart';
 import '../../../core/colors/colors.dart';
-// import '../../Data/mock_student.dart'; 
-import '../../Models/student.dart'; 
+import '../../Models/student.dart';
+import '../../Services/profile_service.dart'; 
 
 class EditStudentStepperPage extends StatefulWidget {
   final Student initialStudent;
@@ -14,16 +12,10 @@ class EditStudentStepperPage extends StatefulWidget {
 }
 
 class _EditStudentStepperPageState extends State<EditStudentStepperPage> {
-  final _formKeys = List.generate(6, (_) => GlobalKey<FormState>());
+  final _formKeys = List.generate(4, (_) => GlobalKey<FormState>());
   int _currentStep = 0;
 
-  // controllers for personal
-  late TextEditingController _nameCtrl;
-  late TextEditingController _studentIdCtrl;
-  late TextEditingController _emailCtrl;
-  late TextEditingController _idNumberCtrl;
-
-  // controllers for academic
+  // Academic info controllers
   late TextEditingController _institutionCtrl;
   late TextEditingController _levelCtrl;
   late TextEditingController _yearCtrl;
@@ -31,16 +23,11 @@ class _EditStudentStepperPageState extends State<EditStudentStepperPage> {
   late TextEditingController _courseDurationCtrl;
   late TextEditingController _modeCtrl;
 
-  // next of kin
+  // Guardian info
   late TextEditingController _guardianNameCtrl;
   late TextEditingController _guardianPhoneCtrl;
 
-  // bursary
-  late TextEditingController _amountRequestedCtrl;
-  late TextEditingController _amountReceivedCtrl;
-  String _bursaryStatus = 'Pending';
-
-  // attachments: work on a mutable copy
+  // Attachments
   late List<Attachment> _attachments;
 
   @override
@@ -48,11 +35,7 @@ class _EditStudentStepperPageState extends State<EditStudentStepperPage> {
     super.initState();
     final s = widget.initialStudent;
 
-    _nameCtrl = TextEditingController(text: s.fullName);
-    _studentIdCtrl = TextEditingController(text: s.studentId);
-    _emailCtrl = TextEditingController(text: s.email);
-    _idNumberCtrl = TextEditingController(text: s.idNumber);
-
+    // Preload academic fields
     final edu = s.educationInfo;
     _institutionCtrl = TextEditingController(text: edu.institution);
     _levelCtrl = TextEditingController(text: edu.level);
@@ -61,26 +44,16 @@ class _EditStudentStepperPageState extends State<EditStudentStepperPage> {
     _courseDurationCtrl = TextEditingController(text: edu.courseDuration);
     _modeCtrl = TextEditingController(text: edu.modeOfStudy);
 
-    _guardianNameCtrl = TextEditingController(text: s.educationInfo == null ? '' : s.fullName); // fallback (if you have guardian fields in Student add them)
-    // If your Student model has guardian fields, replace the above with correct fields.
-    // For this code base, we didn't store guardian in Student; if you do, wire it here.
-    _guardianNameCtrl = TextEditingController(text: (s is dynamic && (s.guardianName ?? '') != '' ) ? s.guardianName ?? '' : '');
-    _guardianPhoneCtrl = TextEditingController(text: (s is dynamic && (s.guardianPhone ?? '') != '' ) ? s.guardianPhone ?? '' : '');
+    // Preload guardian
+    _guardianNameCtrl = TextEditingController(text: s.guardianName ?? '');
+    _guardianPhoneCtrl = TextEditingController(text: s.guardianPhone ?? '');
 
-    final b = s.bursaryInfo;
-    _amountRequestedCtrl = TextEditingController(text: b.amountRequested.toStringAsFixed(0));
-    _amountReceivedCtrl = TextEditingController(text: b.amountReceived.toStringAsFixed(0));
-    _bursaryStatus = b.status;
-
+    // Preload attachments
     _attachments = List.from(s.attachments);
   }
 
   @override
   void dispose() {
-    _nameCtrl.dispose();
-    _studentIdCtrl.dispose();
-    _emailCtrl.dispose();
-    _idNumberCtrl.dispose();
     _institutionCtrl.dispose();
     _levelCtrl.dispose();
     _yearCtrl.dispose();
@@ -89,22 +62,10 @@ class _EditStudentStepperPageState extends State<EditStudentStepperPage> {
     _modeCtrl.dispose();
     _guardianNameCtrl.dispose();
     _guardianPhoneCtrl.dispose();
-    _amountRequestedCtrl.dispose();
-    _amountReceivedCtrl.dispose();
     super.dispose();
   }
 
-  Color _statusToColor(String status) {
-    switch (status.toLowerCase()) {
-      case 'approved':
-        return Colors.green;
-      case 'rejected':
-        return Colors.red;
-      default:
-        return Colors.orangeAccent;
-    }
-  }
-
+  /// Add new attachment
   void _addAttachmentDialog() {
     final nameCtrl = TextEditingController();
     final fileTypeCtrl = TextEditingController();
@@ -116,18 +77,33 @@ class _EditStudentStepperPageState extends State<EditStudentStepperPage> {
         content: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            TextField(controller: nameCtrl, decoration: const InputDecoration(labelText: 'File name')),
-            TextField(controller: fileTypeCtrl, decoration: const InputDecoration(labelText: 'File type (e.g. PDF, Image)')),
+            TextField(
+                controller: nameCtrl,
+                decoration:
+                    const InputDecoration(labelText: 'File name (e.g. ID.pdf)')),
+            TextField(
+                controller: fileTypeCtrl,
+                decoration:
+                    const InputDecoration(labelText: 'File type (PDF, Image)')),
           ],
         ),
         actions: [
-          TextButton(onPressed: () => Navigator.pop(context), child: const Text('Cancel')),
+          TextButton(
+              onPressed: () => Navigator.pop(context),
+              child: const Text('Cancel')),
           ElevatedButton(
-            style: ElevatedButton.styleFrom(backgroundColor: AppColors.primary),
+            style:
+                ElevatedButton.styleFrom(backgroundColor: AppColors.primary),
             onPressed: () {
               if (nameCtrl.text.trim().isNotEmpty) {
                 setState(() {
-                  _attachments.add(Attachment(name: nameCtrl.text.trim(), icon: Icons.insert_drive_file, fileType: fileTypeCtrl.text.trim().isEmpty ? 'File' : fileTypeCtrl.text.trim()));
+                  _attachments.add(Attachment(
+                    name: nameCtrl.text.trim(),
+                    icon: Icons.insert_drive_file,
+                    fileType: fileTypeCtrl.text.trim().isEmpty
+                        ? 'File'
+                        : fileTypeCtrl.text.trim(),
+                  ));
                 });
                 Navigator.pop(context);
               }
@@ -139,6 +115,7 @@ class _EditStudentStepperPageState extends State<EditStudentStepperPage> {
     );
   }
 
+  /// Handle step navigation
   void _onStepContinue() {
     final isLast = _currentStep == _steps().length - 1;
     final formOk = _formKeys[_currentStep].currentState?.validate() ?? true;
@@ -160,53 +137,101 @@ class _EditStudentStepperPageState extends State<EditStudentStepperPage> {
     }
   }
 
-  void _saveAndReturn() {
-    // build updated nested models and student
-    final updatedEdu = widget.initialStudent.educationInfo.copyWith(
-      institution: _institutionCtrl.text.trim(),
-      level: _levelCtrl.text.trim(),
-      year: _yearCtrl.text.trim(),
-      course: _courseCtrl.text.trim(),
-      courseDuration: _courseDurationCtrl.text.trim(),
-      modeOfStudy: _modeCtrl.text.trim(),
-    );
+  /// Save and return updated student object
+  // void _saveAndReturn() {
+  //   final updatedEdu = widget.initialStudent.educationInfo.copyWith(
+  //     institution: _institutionCtrl.text.trim(),
+  //     level: _levelCtrl.text.trim(),
+  //     year: _yearCtrl.text.trim(),
+  //     course: _courseCtrl.text.trim(),
+  //     courseDuration: _courseDurationCtrl.text.trim(),
+  //     modeOfStudy: _modeCtrl.text.trim(),
+  //   );
 
-    final updatedBursary = widget.initialStudent.bursaryInfo.copyWith(
-      amountRequested: double.tryParse(_amountRequestedCtrl.text.trim()) ?? widget.initialStudent.bursaryInfo.amountRequested,
-      amountReceived: double.tryParse(_amountReceivedCtrl.text.trim()) ?? widget.initialStudent.bursaryInfo.amountReceived,
-      status: _bursaryStatus,
-      statusColor: _statusToColor(_bursaryStatus),
-    );
+  //   final updatedStudent = Student(
+  //     userId: widget.initialStudent.userId,
+  //     bursaryId: widget.initialStudent.bursaryId,
+  //     educationInfo: updatedEdu,
+  //     attachments: _attachments,
+  //     guardianName: _guardianNameCtrl.text.trim(),
+  //     guardianPhone: _guardianPhoneCtrl.text.trim(),
+  //   );
 
-    // If your Student model keeps guardian fields, adjust below accordingly.
-    // Building the new student from the available fields:
-    final updatedStudent = widget.initialStudent.copyWith(
-      fullName: _nameCtrl.text.trim(),
-      studentId: _studentIdCtrl.text.trim(),
-      email: _emailCtrl.text.trim(),
-      idNumber: _idNumberCtrl.text.trim(),
-      educationInfo: updatedEdu,
-      bursaryInfo: updatedBursary,
-      attachments: _attachments,
-    );
+  //   Navigator.pop(context, updatedStudent);
+  // }
 
-    Navigator.pop(context, updatedStudent);
+void _saveAndReturn() async {
+  final updatedEdu = widget.initialStudent.educationInfo.copyWith(
+    institution: _institutionCtrl.text.trim(),
+    level: _levelCtrl.text.trim(),
+    year: _yearCtrl.text.trim(),
+    course: _courseCtrl.text.trim(),
+    courseDuration: _courseDurationCtrl.text.trim(),
+    modeOfStudy: _modeCtrl.text.trim(),
+  );
+
+  final updatedStudent = Student(
+    userId: widget.initialStudent.userId,
+    bursaryId: widget.initialStudent.bursaryId,
+    educationInfo: updatedEdu,
+    attachments: _attachments,
+    guardianName: _guardianNameCtrl.text.trim(),
+    guardianPhone: _guardianPhoneCtrl.text.trim(),
+  );
+
+  try {
+    final service = ProfileService();
+    await service.updateStudentProfile(updatedStudent);
+
+    if (mounted) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Profile updated successfully!')),
+      );
+      Navigator.pop(context, updatedStudent);
+    }
+  } catch (e) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(content: Text('Error updating profile: $e')),
+    );
   }
+}
+
 
   List<Step> _steps() => [
         Step(
-          title: const Text('Personal'),
+          title: const Text('Academic Info'),
           content: Form(
             key: _formKeys[0],
             child: Column(
               children: [
-                TextFormField(controller: _nameCtrl, decoration: const InputDecoration(labelText: 'Full name'), validator: (v) => v == null || v.trim().isEmpty ? 'Required' : null),
+                TextFormField(
+                    controller: _institutionCtrl,
+                    decoration:
+                        const InputDecoration(labelText: 'Institution'),
+                    validator: (v) =>
+                        v == null || v.isEmpty ? 'Required' : null),
                 const SizedBox(height: 8),
-                TextFormField(controller: _studentIdCtrl, decoration: const InputDecoration(labelText: 'Student ID'), validator: (v) => v == null || v.trim().isEmpty ? 'Required' : null),
+                TextFormField(
+                    controller: _levelCtrl,
+                    decoration: const InputDecoration(labelText: 'Level')),
                 const SizedBox(height: 8),
-                TextFormField(controller: _emailCtrl, decoration: const InputDecoration(labelText: 'Email'), keyboardType: TextInputType.emailAddress, validator: (v) => v == null || v.trim().isEmpty ? 'Required' : null),
+                TextFormField(
+                    controller: _yearCtrl,
+                    decoration: const InputDecoration(labelText: 'Year')),
                 const SizedBox(height: 8),
-                TextFormField(controller: _idNumberCtrl, decoration: const InputDecoration(labelText: 'ID Number')),
+                TextFormField(
+                    controller: _courseCtrl,
+                    decoration: const InputDecoration(labelText: 'Course')),
+                const SizedBox(height: 8),
+                TextFormField(
+                    controller: _courseDurationCtrl,
+                    decoration:
+                        const InputDecoration(labelText: 'Course Duration')),
+                const SizedBox(height: 8),
+                TextFormField(
+                    controller: _modeCtrl,
+                    decoration:
+                        const InputDecoration(labelText: 'Mode of Study')),
               ],
             ),
           ),
@@ -215,20 +240,21 @@ class _EditStudentStepperPageState extends State<EditStudentStepperPage> {
         ),
 
         Step(
-          title: const Text('Academic'),
+          title: const Text('Guardian Info'),
           content: Form(
             key: _formKeys[1],
             child: Column(
               children: [
-                TextFormField(controller: _institutionCtrl, decoration: const InputDecoration(labelText: 'Institution'), validator: (v) => v == null || v.trim().isEmpty ? 'Required' : null),
+                TextFormField(
+                    controller: _guardianNameCtrl,
+                    decoration:
+                        const InputDecoration(labelText: 'Guardian Name')),
                 const SizedBox(height: 8),
-                TextFormField(controller: _courseCtrl, decoration: const InputDecoration(labelText: 'Course')),
-                const SizedBox(height: 8),
-                TextFormField(controller: _yearCtrl, decoration: const InputDecoration(labelText: 'Year')),
-                const SizedBox(height: 8),
-                TextFormField(controller: _courseDurationCtrl, decoration: const InputDecoration(labelText: 'Course Duration')),
-                const SizedBox(height: 8),
-                TextFormField(controller: _modeCtrl, decoration: const InputDecoration(labelText: 'Mode of Study')),
+                TextFormField(
+                    controller: _guardianPhoneCtrl,
+                    decoration:
+                        const InputDecoration(labelText: 'Guardian Phone'),
+                    keyboardType: TextInputType.phone),
               ],
             ),
           ),
@@ -237,39 +263,24 @@ class _EditStudentStepperPageState extends State<EditStudentStepperPage> {
         ),
 
         Step(
-          title: const Text('Next of Kin'),
+          title: const Text('Attachments'),
           content: Form(
             key: _formKeys[2],
             child: Column(
               children: [
-                TextFormField(controller: _guardianNameCtrl, decoration: const InputDecoration(labelText: 'Guardian name')),
-                const SizedBox(height: 8),
-                TextFormField(controller: _guardianPhoneCtrl, decoration: const InputDecoration(labelText: 'Guardian phone'), keyboardType: TextInputType.phone),
-              ],
-            ),
-          ),
-          isActive: _currentStep >= 2,
-          state: _currentStep > 2 ? StepState.complete : StepState.indexed,
-        ),
-
-
-
-        Step(
-          title: const Text('Attachments'),
-          content: Form(
-            key: _formKeys[4],
-            child: Column(
-              children: [
                 ElevatedButton.icon(
-                  style: ElevatedButton.styleFrom(backgroundColor: AppColors.primary),
+                  style: ElevatedButton.styleFrom(
+                      backgroundColor: AppColors.primary),
                   onPressed: _addAttachmentDialog,
                   icon: const Icon(Icons.add),
                   label: const Text('Add attachment'),
                 ),
-                const SizedBox(height: 8),
-                if (_attachments.isEmpty) const Text('No attachments yet'),
+                const SizedBox(height: 12),
+                if (_attachments.isEmpty)
+                  const Text('No attachments yet.'),
                 ListView.separated(
                   shrinkWrap: true,
+                  physics: const NeverScrollableScrollPhysics(),
                   itemCount: _attachments.length,
                   separatorBuilder: (_, __) => const Divider(),
                   itemBuilder: (_, i) {
@@ -284,40 +295,38 @@ class _EditStudentStepperPageState extends State<EditStudentStepperPage> {
                       ),
                     );
                   },
-                )
+                ),
               ],
             ),
           ),
-          isActive: _currentStep >= 4,
-          state: _currentStep > 4 ? StepState.complete : StepState.indexed,
+          isActive: _currentStep >= 2,
+          state: _currentStep > 2 ? StepState.complete : StepState.indexed,
         ),
 
         Step(
           title: const Text('Review & Save'),
           content: Form(
-            key: _formKeys[5],
+            key: _formKeys[3],
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const Text('Review changes below', style: TextStyle(fontWeight: FontWeight.bold)),
-                const SizedBox(height: 8),
-                Text('Name: ${_nameCtrl.text}'),
-                Text('Student ID: ${_studentIdCtrl.text}'),
-                Text('Email: ${_emailCtrl.text}'),
+                const Text('Review your details:',
+                    style:
+                        TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
                 const SizedBox(height: 8),
                 Text('Institution: ${_institutionCtrl.text}'),
                 Text('Course: ${_courseCtrl.text}'),
+                Text('Guardian: ${_guardianNameCtrl.text}'),
                 const SizedBox(height: 8),
-                Text('Amount requested: ${_amountRequestedCtrl.text}'),
-                Text('Status: $_bursaryStatus'),
-                const SizedBox(height: 8),
-                const Text('Attachments:', style: TextStyle(fontWeight: FontWeight.bold)),
-                ..._attachments.map((a) => Text('- ${a.name} (${a.fileType})')).toList(),
+                const Text('Attachments:',
+                    style:
+                        TextStyle(fontWeight: FontWeight.bold, fontSize: 15)),
+                ..._attachments.map((a) => Text('- ${a.name} (${a.fileType})')),
               ],
             ),
           ),
-          isActive: _currentStep >= 5,
-          state: _currentStep > 5 ? StepState.complete : StepState.indexed,
+          isActive: _currentStep >= 3,
+          state: _currentStep > 3 ? StepState.complete : StepState.indexed,
         ),
       ];
 
@@ -325,16 +334,15 @@ class _EditStudentStepperPageState extends State<EditStudentStepperPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Edit Student'),
+        title: const Text('Edit Student Info'),
         backgroundColor: AppColors.primary,
       ),
       body: Stepper(
         type: StepperType.vertical,
-        physics: const ClampingScrollPhysics(),
         currentStep: _currentStep,
         onStepContinue: _onStepContinue,
         onStepCancel: _onStepCancel,
-        onStepTapped: (step) => setState(() => _currentStep = step),
+        onStepTapped: (i) => setState(() => _currentStep = i),
         steps: _steps(),
         controlsBuilder: (context, details) {
           final isLast = _currentStep == _steps().length - 1;
@@ -343,12 +351,15 @@ class _EditStudentStepperPageState extends State<EditStudentStepperPage> {
             child: Row(
               children: [
                 ElevatedButton(
-                  style: ElevatedButton.styleFrom(backgroundColor: AppColors.primary),
+                  style: ElevatedButton.styleFrom(
+                      backgroundColor: AppColors.primary),
                   onPressed: details.onStepContinue,
                   child: Text(isLast ? 'Save' : 'Next'),
                 ),
                 const SizedBox(width: 12),
-                TextButton(onPressed: details.onStepCancel, child: const Text('Back')),
+                TextButton(
+                    onPressed: details.onStepCancel,
+                    child: const Text('Back')),
               ],
             ),
           );
@@ -357,4 +368,3 @@ class _EditStudentStepperPageState extends State<EditStudentStepperPage> {
     );
   }
 }
-
