@@ -42,9 +42,9 @@ class Bursary {
   });
 
   /// Convert JSON → Bursary object
-  factory Bursary.fromJson(Map<String, dynamic> json) {
+  factory Bursary.fromJson(Map<String, dynamic> json,String id) {
     return Bursary(
-      id: json['id']?.toString() ?? '',
+      id: id,
       name: json['name'] ?? '',
       provider: json['provider'] ?? '',
       category: json['category'] ?? '',
@@ -54,7 +54,12 @@ class Bursary {
       region: json['region'] ?? '',
       fundingType: json['fundingType'] ?? json['funding_type'] ?? '',
       amountRange: json['amountRange'] ?? json['amount_range'] ?? '',
-      eligibility: List<String>.from(json['eligibility'] ?? []),
+      eligibility: (json['eligibility'] is String)
+          ? (json['eligibility'] as String)
+          .split(',')
+          .map((e) => e.trim())
+          .toList()
+          : List<String>.from(json['eligibility'] ?? []),
       applicationMode: json['applicationMode'] ?? json['application_mode'] ?? '',
       applicationPeriod:
           json['applicationPeriod'] ?? json['application_period'] ?? '',
@@ -94,7 +99,11 @@ class Bursary {
   /// Decode a list of bursaries from JSON string
   static List<Bursary> fromJsonList(String jsonString) {
     final data = json.decode(jsonString) as List;
-    return data.map((e) => Bursary.fromJson(e)).toList();
+    return data.asMap().entries.map((entry){
+     final e = entry.value;
+     final id = e['id'] ?? entry.key.toString();
+     return Bursary.fromJson(Map<String, dynamic>.from(e), id);
+    }).toList();
   }
 
   ///  Encode list → JSON string

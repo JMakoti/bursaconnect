@@ -15,7 +15,7 @@ dependencies:
   cloud_firestore: ^5.4.0
   fluttertoast: ^9.0.0
   image_picker: ^1.0.4
-  provider: ^6.1.1
+  provider: ^6.1.5+1
   shared_preferences: ^2.2.2
   http: ^1.1.0
   

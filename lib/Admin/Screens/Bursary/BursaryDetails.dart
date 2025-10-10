@@ -1,19 +1,22 @@
 import 'package:flutter/material.dart';
-class BursaryDetails extends StatefulWidget {
-  const BursaryDetails({super.key});
-
-  @override
-  State<BursaryDetails> createState() => _BursaryDetailsState();
-}
-
-class _BursaryDetailsState extends State<BursaryDetails> {
+import 'package:bursaconnect/Users/Models/bursary.dart';
+class BursaryDetails extends StatelessWidget {
+  final Bursary? bursary;
+  const BursaryDetails({super.key,this.bursary});
 
   @override
   Widget build(BuildContext context) {
+    final bursaryArg = bursary ?? ModalRoute.of(context)?.settings.arguments as Bursary?;
+
+    if (bursaryArg == null) {
+      return const Scaffold(
+        body: Center(child: Text('No bursary data found')),
+      );
+    }
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: true,
-        title: Text("County Government Bursary",
+        title: Text("${bursaryArg.provider}",
         style: TextStyle(
           fontSize: 18,
         ),),
@@ -44,12 +47,12 @@ class _BursaryDetailsState extends State<BursaryDetails> {
                             color: Colors.blueAccent,),
                         ),
                       ),
-                      title: Text('County Government Bursary',
+                      title: Text("${bursaryArg.provider}",
                         style: TextStyle(
                           fontWeight: FontWeight.w700,
                         ),
                       ),
-                      subtitle: Text("Mombasa County Government",
+                      subtitle: Text("Kenya",
                         style: TextStyle(
                           color: Colors.grey.shade400,
                         ),),
@@ -59,7 +62,7 @@ class _BursaryDetailsState extends State<BursaryDetails> {
                     ),
                    ListTile(
                      leading: Text("Category"),
-                     trailing:Text("Government",
+                     trailing:Text("${bursaryArg.category}",
                      style: TextStyle(
                        fontSize: 12,
                      ),
@@ -68,7 +71,7 @@ class _BursaryDetailsState extends State<BursaryDetails> {
                     Divider(),
                     ListTile(
                       leading: Text("Level of Study"),
-                      trailing:Text("Secondary, tertiary",
+                      trailing:Text("${bursaryArg.level}",
                         style: TextStyle(
                           fontSize: 12,
                         ),
@@ -77,7 +80,7 @@ class _BursaryDetailsState extends State<BursaryDetails> {
                     Divider(),
                     ListTile(
                       leading: Text("Region"),
-                      trailing:Text("County",
+                      trailing:Text("${bursaryArg.region}",
                         style: TextStyle(
                           fontSize: 12,
                         ),
@@ -104,7 +107,7 @@ class _BursaryDetailsState extends State<BursaryDetails> {
 
                     ListTile(
                       leading: Text("Funding Type"),
-                      trailing:Text("Grant",
+                      trailing:Text("${bursaryArg.fundingType}",
                         style: TextStyle(
                           fontSize: 12,
                         ),
@@ -113,7 +116,7 @@ class _BursaryDetailsState extends State<BursaryDetails> {
                     Divider(),
                     ListTile(
                       leading: Text("Amount Range"),
-                      trailing:Text("Ksh 5000 - 25000",
+                      trailing:Text("${bursaryArg.amountRange}",
                         style: TextStyle(
                           fontSize: 12,
                         ),
@@ -122,7 +125,7 @@ class _BursaryDetailsState extends State<BursaryDetails> {
                     Divider(),
                     ListTile(
                       leading: Text("Application Deadline"),
-                      trailing:Text("2025-03-31",
+                      trailing:Text("${bursaryArg.deadline}",
                         style: TextStyle(
                           fontSize: 12,
                         ),
@@ -131,7 +134,7 @@ class _BursaryDetailsState extends State<BursaryDetails> {
                     Divider(),
                     ListTile(
                       leading: Text("Contact Email"),
-                      trailing:Text("education@mombasa.go.ke",
+                      trailing:Text("${bursaryArg.contactEmail}",
                         style: TextStyle(
                           fontSize: 12,
                         ),
@@ -140,7 +143,7 @@ class _BursaryDetailsState extends State<BursaryDetails> {
                     Divider(),
                     ListTile(
                       leading: Text("Website"),
-                      trailing:Text("https://mombasa.go.ke/education",
+                      trailing:Text("${bursaryArg.website}",
                         style: TextStyle(
                           fontSize: 12,
                         ),
@@ -157,6 +160,5 @@ class _BursaryDetailsState extends State<BursaryDetails> {
     ),
     );
   }
-
 }
 

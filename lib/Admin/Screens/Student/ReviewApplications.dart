@@ -83,18 +83,23 @@ class _ReviewapplicationsState extends State<Reviewapplications> {
                             )
                           ],
                         ),
-                        trailing:  Container(
-                          padding:
-                          const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
-                          decoration: BoxDecoration(
-                            color: Colors.blueAccent,
-                            borderRadius: BorderRadius.circular(8),
-                          ),
-                          child: const Text(
-                            "Review",
-                            style: TextStyle(color: Colors.white, fontSize: 12),
-                          ),
+                        trailing:  GestureDetector(
+                          onTap: (){
+                            Navigator.pushNamed(context,"/acceptreject");
+                          },
+                          child: Container(
+                            padding:
+                            const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
+                            decoration: BoxDecoration(
+                              color: Colors.blueAccent,
+                              borderRadius: BorderRadius.circular(8),
+                            ),
+                            child: const Text(
+                              "Review",
+                              style: TextStyle(color: Colors.white, fontSize: 12),
+                            ),
 
+                          ),
                         ),
                       )
                     ],
@@ -203,7 +208,7 @@ class _ReviewapplicationsState extends State<Reviewapplications> {
                         ),
                         trailing:  GestureDetector(
                           onTap: (){
-                            Navigator.pushNamed(context,"/reviewchoice");
+                            Navigator.pushNamed(context,"/acceptreject");
                           },
                           child: Container(
                             padding:

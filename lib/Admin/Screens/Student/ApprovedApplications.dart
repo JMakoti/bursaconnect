@@ -86,18 +86,23 @@ class _ApprovedapplicationsState extends State<Approvedapplications> {
                             )
                           ],
                         ),
-                        trailing:  Container(
-                          padding:
-                          const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
-                          decoration: BoxDecoration(
-                            color: Colors.blueAccent,
-                            borderRadius: BorderRadius.circular(8),
-                          ),
-                          child: const Text(
-                            "View More",
-                            style: TextStyle(color: Colors.white, fontSize: 12),
-                          ),
+                        trailing:  GestureDetector(
+                          onTap: (){
+                            Navigator.pushNamed(context,"/studentdetails");
+                          },
+                          child: Container(
+                            padding:
+                            const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
+                            decoration: BoxDecoration(
+                              color: Colors.blueAccent,
+                              borderRadius: BorderRadius.circular(8),
+                            ),
+                            child: const Text(
+                              "View More",
+                              style: TextStyle(color: Colors.white, fontSize: 12),
+                            ),
 
+                          ),
                         ),
                       )
                     ],

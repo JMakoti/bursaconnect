@@ -42,12 +42,15 @@ class AdminDash extends StatelessWidget {
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
-          children: const [
+          children:  [
             DashboardCard(
               title: "Total Applicants",
               value: "124",
               icon: Icons.people_alt_rounded,
               color: Color(0xFF2563EB),
+              onTap: (){
+                Navigator.pushNamed(context,"/student");
+              },
             ),
             SizedBox(height: 20),
             DashboardCard(
@@ -55,6 +58,9 @@ class AdminDash extends StatelessWidget {
               value: "12",
               icon: Icons.school_rounded,
               color: Color(0xFF059669),
+              onTap: (){
+                Navigator.pushNamed(context, "/bursary");
+              },
             ),
             SizedBox(height: 20),
             DashboardCard(
@@ -62,6 +68,9 @@ class AdminDash extends StatelessWidget {
               value: "98",
               icon: Icons.check_circle_rounded,
               color: Color(0xFFF59E0B),
+              onTap: (){
+                Navigator.pushNamed(context, "/approvedApplications");
+              },
             ),
           ],
         ),
