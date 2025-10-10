@@ -268,45 +268,6 @@ void _saveAndReturn() async {
             key: _formKeys[2],
             child: Column(
               children: [
-                TextFormField(controller: _guardianNameCtrl, decoration: const InputDecoration(labelText: 'Guardian name')),
-                const SizedBox(height: 8),
-                TextFormField(controller: _guardianPhoneCtrl, decoration: const InputDecoration(labelText: 'Guardian phone'), keyboardType: TextInputType.phone),
-              ],
-            ),
-          ),
-          isActive: _currentStep >= 2,
-          state: _currentStep > 2 ? StepState.complete : StepState.indexed,
-        ),
-
-        Step(
-          title: const Text('Bursary'),
-          content: Form(
-            key: _formKeys[3],
-            child: Column(
-              children: [
-                TextFormField(controller: _amountRequestedCtrl, decoration: const InputDecoration(labelText: 'Amount requested'), keyboardType: TextInputType.number),
-                const SizedBox(height: 8),
-                TextFormField(controller: _amountReceivedCtrl, decoration: const InputDecoration(labelText: 'Amount received'), keyboardType: TextInputType.number),
-                const SizedBox(height: 8),
-                DropdownButtonFormField<String>(
-                  value: _bursaryStatus,
-                  items: ['Pending', 'Approved', 'Rejected'].map((s) => DropdownMenuItem(value: s, child: Text(s))).toList(),
-                  onChanged: (v) => setState(() => _bursaryStatus = v ?? 'Pending'),
-                  decoration: const InputDecoration(labelText: 'Status'),
-                )
-              ],
-            ),
-          ),
-          isActive: _currentStep >= 3,
-          state: _currentStep > 3 ? StepState.complete : StepState.indexed,
-        ),
-
-        Step(
-          title: const Text('Attachments'),
-          content: Form(
-            key: _formKeys[4],
-            child: Column(
-              children: [
                 ElevatedButton.icon(
                   style: ElevatedButton.styleFrom(
                       backgroundColor: AppColors.primary),
@@ -357,11 +318,10 @@ void _saveAndReturn() async {
                 Text('Course: ${_courseCtrl.text}'),
                 Text('Guardian: ${_guardianNameCtrl.text}'),
                 const SizedBox(height: 8),
-                Text('Amount requested: ${_amountRequestedCtrl.text}'),
-                Text('Status: $_bursaryStatus'),
-                const SizedBox(height: 8),
-                const Text('Attachments:', style: TextStyle(fontWeight: FontWeight.bold)),
-                ..._attachments.map((a) => Text('- ${a.name} (${a.fileType})')).toList(),
+                const Text('Attachments:',
+                    style:
+                        TextStyle(fontWeight: FontWeight.bold, fontSize: 15)),
+                ..._attachments.map((a) => Text('- ${a.name} (${a.fileType})')),
               ],
             ),
           ),
