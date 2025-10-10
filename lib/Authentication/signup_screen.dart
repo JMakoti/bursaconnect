@@ -27,6 +27,7 @@ class _SignupScreenState extends State<SignupScreen> {
   bool _isConfirmPasswordVisible = false;
   bool _isLoading = false;
 
+
   // dropdown role variable
   String? _selectedRole;
   final List<String> _roles = ['User', 'Admin'];
@@ -187,7 +188,7 @@ class _SignupScreenState extends State<SignupScreen> {
                 prefixIcon: Icon(Icons.work),
                 hintText: "Select Role",
               ),
-              initialValue: _selectedRole,
+              value: _selectedRole,
               items: _roles
                   .map(
                     (role) => DropdownMenuItem<String>(

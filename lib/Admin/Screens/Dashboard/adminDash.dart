@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:bursaconnect/Users/widgets/dashboardCard.dart';
-import 'package:bursaconnect/Admin/Screens/bursary/post_bursary_screen.dart';
-import 'package:bursaconnect/Admin/Screens/Student/Reviewapplications.dart';
+import 'package:bursaconnect/Admin/Screens/Bursary/post_bursary_screen.dart';
+import 'package:bursaconnect/Admin/Screens/Student/ReviewApplications.dart';
 import 'package:bursaconnect/Admin/Screens/Activity/activity.dart';
 
 class AdminDash extends StatelessWidget {
