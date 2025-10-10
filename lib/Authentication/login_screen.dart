@@ -11,9 +11,7 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-  // assigns a unique identifier to your Form.
   final _formKey = GlobalKey<FormState>();
-  // Create a text controller and use it to retrieve the current value
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
 
@@ -22,7 +20,6 @@ class _LoginScreenState extends State<LoginScreen> {
 
   final AuthService authService = AuthService();
 
-  // submit form
   // --- LOGIN USER ---
   Future<void> _loginUser() async {
     if (!_formKey.currentState!.validate()) return;
@@ -38,27 +35,28 @@ class _LoginScreenState extends State<LoginScreen> {
 
     if (result != null) {
       final role = result['role'];
-      if(!mounted) return;
-      if (role == 'Admin') {
-        Navigator.pushNamed(context, '/adminDashboard');
+
+      print('========== LOGIN DEBUG ==========');
+      print('Login successful!');
+      print('User ID: ${result['user']?.uid}');
+      print('Role from Firestore: $role');
+      print('================================');
+
+      if (!mounted) return;
+
+      // 🔹 Case-insensitive role check
+      if (role != null && role.toString().trim().toLowerCase() == 'admin') {
+        Navigator.pushReplacementNamed(context, '/adminDashboard');
       } else {
-        Navigator.pushNamed(context, '/userDashboard');
+        Navigator.pushReplacementNamed(context, '/userDashboard');
       }
     } else {
-      if(!mounted) return;
+      if (!mounted) return;
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(content: Text('Login failed. Check credentials.')),
       );
     }
   }
-  // void _submitForm() {
-  //   if (_formKey.currentState!.validate()) {
-  //     // All inputs valid – handle sign-up logic here
-  //     ScaffoldMessenger.of(
-  //       context,
-  //     ).showSnackBar(const SnackBar(content: Text('Loging in......')));
-  //   }
-  // }
 
   // Email validation
   String? _validateEmail(String? value) {
@@ -88,11 +86,9 @@ class _LoginScreenState extends State<LoginScreen> {
       padding: const EdgeInsets.all(24),
       child: Form(
         key: _formKey,
-        //flexiable for , expanded to prevent machine overflow
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            //header
             const Text(
               "Welcome Back",
               style: TextStyle(
@@ -104,11 +100,13 @@ class _LoginScreenState extends State<LoginScreen> {
             const SizedBox(height: 8),
             const Text(
               "Sign in to continue your bursary-journey",
-              style: TextStyle(fontSize: 16, color: AppColors.secondaryText,),
+              style: TextStyle(
+                fontSize: 16,
+                color: AppColors.secondaryText,
+              ),
             ),
             const SizedBox(height: 48),
 
-            // Email Field
             TextFormField(
               controller: _emailController,
               decoration: const InputDecoration(
@@ -119,13 +117,12 @@ class _LoginScreenState extends State<LoginScreen> {
             ),
             const SizedBox(height: 24),
 
-            //Password Field
             TextFormField(
               controller: _passwordController,
               obscureText: !_isPasswordVisible,
               decoration: InputDecoration(
                 hintText: "Password",
-                prefixIcon: Icon(Icons.lock),
+                prefixIcon: const Icon(Icons.lock),
                 suffixIcon: IconButton(
                   icon: Icon(
                     _isPasswordVisible
@@ -143,25 +140,21 @@ class _LoginScreenState extends State<LoginScreen> {
             ),
             const SizedBox(height: 24),
 
-            //Login button
             SizedBox(
               width: double.infinity,
               child: ElevatedButton(
-                onPressed:  _isLoading ? null : _loginUser,
+                onPressed: _isLoading ? null : _loginUser,
                 style: ElevatedButton.styleFrom(
                   backgroundColor: AppColors.accent,
                   foregroundColor: AppColors.background,
                   padding: const EdgeInsets.symmetric(vertical: 14),
                 ),
-                child:  _isLoading
-                    ? const CircularProgressIndicator(
-                        color: Colors.white,
-                      )
-                    :const Text("Log In"),
+                child: _isLoading
+                    ? const CircularProgressIndicator(color: Colors.white)
+                    : const Text("Log In"),
               ),
             ),
 
-            //Sign up Link
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
@@ -171,7 +164,6 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
                 TextButton(
                   onPressed: () {
-                    // Navigate to Login Screen
                     Navigator.push(
                       context,
                       MaterialPageRoute(

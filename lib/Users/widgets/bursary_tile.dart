@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import '../../core/colors/colors.dart';
 import '../Models/bursary.dart';
-import './action_btn.dart';
-import './container.dart';
+import 'action_btn.dart';
+import 'container.dart';
 
 class BursaryTile extends StatelessWidget {
   final Bursary bursary;

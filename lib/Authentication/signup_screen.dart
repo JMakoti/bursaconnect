@@ -187,7 +187,7 @@ class _SignupScreenState extends State<SignupScreen> {
                 prefixIcon: Icon(Icons.work),
                 hintText: "Select Role",
               ),
-              value: _selectedRole,
+              initialValue: _selectedRole,
               items: _roles
                   .map(
                     (role) => DropdownMenuItem<String>(
