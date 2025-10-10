@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:cloud_firestore/cloud_firestore.dart'; // ✅ Firestore import
 
 class PostBursaryScreen extends StatefulWidget {
   const PostBursaryScreen({super.key});
@@ -29,6 +30,47 @@ class _PostBursaryScreenState extends State<PostBursaryScreen> {
   final TextEditingController _websiteController = TextEditingController();
 
   bool _isOpen = true;
+
+  Future<void> _saveBursary() async {
+    try {
+      // use bursary title as document ID (you can change to uuid if you want unique always)
+      String docId = _titleController.text.trim();
+
+      await FirebaseFirestore.instance.collection('bursaries').doc(docId).set({
+        'title': _titleController.text.trim(),
+        'provider': _providerController.text.trim(),
+        'category': _categoryController.text.trim(),
+        'type': _typeController.text.trim(),
+        'targetGroup': _targetGroupController.text.trim(),
+        'level': _levelController.text.trim(),
+        'region': _regionController.text.trim(),
+        'fundingType': _fundingTypeController.text.trim(),
+        'amountRange': _amountRangeController.text.trim(),
+        'eligibility': _eligibilityController.text.trim(),
+        'applicationMode': _applicationModeController.text.trim(),
+        'applicationPeriod': _applicationPeriodController.text.trim(),
+        'applicationLink': _applicationLinkController.text.trim(),
+        'deadline': _deadlineController.text.trim(),
+        'contactEmail': _contactEmailController.text.trim(),
+        'website': _websiteController.text.trim(),
+        'isOpen': _isOpen,
+        'createdAt': FieldValue.serverTimestamp(),
+      });
+
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text("✅ Bursary submitted successfully")),
+      );
+
+      _formKey.currentState!.reset();
+      setState(() {
+        _isOpen = true;
+      });
+    } catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text("❌ Failed to submit: $e")),
+      );
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -93,10 +135,7 @@ class _PostBursaryScreenState extends State<PostBursaryScreen> {
                   ),
                   onPressed: () {
                     if (_formKey.currentState!.validate()) {
-                      // TODO: Save to Firebase Firestore
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(content: Text("Bursary submitted successfully")),
-                      );
+                      _saveBursary(); // ✅ Firestore save
                     }
                   },
                   child: const Text(
