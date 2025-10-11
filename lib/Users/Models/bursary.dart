@@ -2,7 +2,7 @@ import 'dart:convert';
 
 class Bursary {
   final String id; 
-  final String name;
+  final String title;
   final String provider;
   final String category;          
   final String type;              
@@ -22,7 +22,7 @@ class Bursary {
 
   Bursary({
     required this.id,
-    required this.name,
+    required this.title,
     required this.provider,
     required this.category,
     required this.type,
@@ -45,7 +45,7 @@ class Bursary {
   factory Bursary.fromJson(Map<String, dynamic> json,String id) {
     return Bursary(
       id: id,
-      name: json['name'] ?? '',
+      title: json['title'] ?? '',
       provider: json['provider'] ?? '',
       category: json['category'] ?? '',
       type: json['type'] ?? '',
@@ -76,7 +76,7 @@ class Bursary {
   Map<String, dynamic> toJson() {
     return {
       'id': id,
-      'name': name,
+      'title': title,
       'provider': provider,
       'category': category,
       'type': type,

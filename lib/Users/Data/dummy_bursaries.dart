@@ -3,7 +3,7 @@ import '../Models/bursary.dart';
 final List<Bursary> dummyBursaries = [
   Bursary(
     id: "1",
-    name: "County Government Bursary",
+    title: "County Government Bursary",
     provider: "Mombasa County Government",
     category: "Government",
     type: "Need-based",
@@ -28,7 +28,7 @@ final List<Bursary> dummyBursaries = [
   ),
   Bursary(
     id: "2",
-    name: "National Government Affirmative Action Fund (NGAAF)",
+    title: "National Government Affirmative Action Fund (NGAAF)",
     provider: "Ministry of Public Service, Gender and Affirmative Action",
     category: "Government",
     type: "Affirmative",
@@ -52,7 +52,7 @@ final List<Bursary> dummyBursaries = [
   ),
   Bursary(
     id: "3",
-    name: "Presidential Bursary Scheme for Orphans and Vulnerable Students",
+    title: "Presidential Bursary Scheme for Orphans and Vulnerable Students",
     provider: "Ministry of Education",
     category: "Government",
     type: "Need-based",
@@ -76,7 +76,7 @@ final List<Bursary> dummyBursaries = [
   ),
   Bursary(
     id: "4",
-    name: "Higher Education Funding (HEF)",
+    title: "Higher Education Funding (HEF)",
     provider: "Government of Kenya (HEF Portal)",
     category: "Government",
     type: "Merit and Need-based",
@@ -100,7 +100,7 @@ final List<Bursary> dummyBursaries = [
   ),
   Bursary(
     id: "5",
-    name: "Presidential Secondary School Bursary",
+    title: "Presidential Secondary School Bursary",
     provider: "Ministry of Education",
     category: "Government",
     type: "Need-based",
@@ -124,7 +124,7 @@ final List<Bursary> dummyBursaries = [
   ),
   Bursary(
     id: "6",
-    name: "Kenya Institute of Social Work and Community Development (KISWCD) Bursary",
+    title: "Kenya Institute of Social Work and Community Development (KISWCD) Bursary",
     provider: "KISWCD Administration",
     category: "Institutional",
     type: "Need-based",
@@ -148,7 +148,7 @@ final List<Bursary> dummyBursaries = [
   ),
   Bursary(
     id: "7",
-    name: "Higher Education Loans Board (HELB) Bursary",
+    title: "Higher Education Loans Board (HELB) Bursary",
     provider: "HELB Kenya",
     category: "Government",
     type: "Need-based",

@@ -34,7 +34,7 @@ class AppliedBursaryTile extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      bursary.name,
+                      bursary.title,
                       style: const TextStyle(
                         fontSize: 17,
                         fontWeight: FontWeight.bold,
@@ -105,7 +105,7 @@ class AppliedBursaryTile extends StatelessWidget {
                 onPressed: () {
                   ScaffoldMessenger.of(context).showSnackBar(
                     SnackBar(
-                      content: Text('Delete application for ${bursary.name}'),
+                      content: Text('Delete application for ${bursary.title}'),
                       backgroundColor: AppColors.error,
                     ),
                   );

@@ -1,20 +1,63 @@
 import 'package:flutter/material.dart';
-import '../../../core/colors/colors.dart';
-import '../../widgets/container.dart';
-import '../../Models/bursary.dart';
+import 'package:bursaconnect/core/colors/colors.dart';
+import 'package:bursaconnect/Users/Models/bursary.dart';
+import 'package:bursaconnect/Users/widgets/container.dart';
+import '../../../Admin/Services/ActiveBussaries.dart';
 
-class BursaryDetails extends StatelessWidget {
-  final Bursary bursary;
+class BursaryDetails extends StatefulWidget {
+  final String bursaryId;
 
-  const BursaryDetails({super.key, required this.bursary});
+  const BursaryDetails({super.key, required this.bursaryId});
+
+  @override
+  State<BursaryDetails> createState() => _BursaryDetailsState();
+}
+
+class _BursaryDetailsState extends State<BursaryDetails> {
+  final _service = BursaryService();
+  Bursary? _bursary;
+  bool _loading = true;
+
+  @override
+  void initState() {
+    super.initState();
+    _fetchBursary();
+  }
+
+  Future<void> _fetchBursary() async {
+    final bursary = await _service.getBursaryById(widget.bursaryId);
+    if (mounted) {
+      setState(() {
+        _bursary = bursary;
+        _loading = false;
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
+    if (_loading) {
+      return const Scaffold(
+        body: Center(child: CircularProgressIndicator()),
+      );
+    }
+
+    if (_bursary == null) {
+      return Scaffold(
+        appBar: AppBar(
+          title: const Text('Bursary Not Found'),
+          backgroundColor: AppColors.background,
+        ),
+        body: const Center(child: Text('This bursary could not be found.')),
+      );
+    }
+
+    final bursary = _bursary!;
     return Scaffold(
       backgroundColor: AppColors.background,
       appBar: AppBar(
         title: Text(
-          bursary.name,
+          bursary.title,
           style: const TextStyle(color: AppColors.background),
         ),
         backgroundColor: AppColors.primary,
@@ -27,13 +70,13 @@ class BursaryDetails extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            _bursaryInfoCard(context),
+            _bursaryInfoCard(bursary),
             const SizedBox(height: 16),
-            _fundingDetailsCard(context),
+            _fundingDetailsCard(bursary),
             const SizedBox(height: 16),
-            _eligibilityCard(context),
+            _eligibilityCard(bursary),
             const SizedBox(height: 16),
-            _applicationDetailsCard(context),
+            _applicationDetailsCard(bursary),
           ],
         ),
       ),
@@ -41,8 +84,7 @@ class BursaryDetails extends StatelessWidget {
   }
 
   /// --- SECTIONS ---
-
-  Widget _bursaryInfoCard(BuildContext context) {
+  Widget _bursaryInfoCard(Bursary bursary) {
     return ContainerInfoCard(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -52,11 +94,7 @@ class BursaryDetails extends StatelessWidget {
               CircleAvatar(
                 radius: 24,
                 backgroundColor: AppColors.accent.withValues(alpha: 0.15),
-                child: const Icon(
-                  Icons.school,
-                  size: 28,
-                  color: AppColors.accent,
-                ),
+                child: const Icon(Icons.school, size: 28, color: AppColors.accent),
               ),
               const SizedBox(width: 12),
               Expanded(
@@ -64,7 +102,7 @@ class BursaryDetails extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      bursary.name,
+                      bursary.title,
                       style: const TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.bold,
@@ -94,7 +132,7 @@ class BursaryDetails extends StatelessWidget {
     );
   }
 
-  Widget _eligibilityCard(BuildContext context) {
+  Widget _eligibilityCard(Bursary bursary) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -110,24 +148,20 @@ class BursaryDetails extends StatelessWidget {
         ContainerInfoCard(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
-            children: bursary.eligibility
-                .map(
-                  (e) => Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 4.0),
-                    child: Text(
-                      '• $e',
-                      style: TextStyle(color: AppColors.text.withValues(alpha: 0.8)),
-                    ),
-                  ),
-                )
-                .toList(),
+            children: bursary.eligibility.map(
+              (e) => Padding(
+                padding: const EdgeInsets.symmetric(vertical: 4.0),
+                child: Text('• $e',
+                    style: TextStyle(color: AppColors.text.withValues(alpha: 0.8))),
+              ),
+            ).toList(),
           ),
         ),
       ],
     );
   }
 
-  Widget _fundingDetailsCard(BuildContext context) {
+  Widget _fundingDetailsCard(Bursary bursary) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -160,7 +194,7 @@ class BursaryDetails extends StatelessWidget {
     );
   }
 
-  Widget _applicationDetailsCard(BuildContext context) {
+  Widget _applicationDetailsCard(Bursary bursary) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -198,12 +232,7 @@ class BursaryDetails extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Text(
-            title,
-            style: TextStyle(
-              color: AppColors.text.withValues(alpha: 0.8),
-            ),
-          ),
+          Text(title, style: TextStyle(color: AppColors.text.withValues(alpha: 0.8))),
           Flexible(
             child: Text(
               value,

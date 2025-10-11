@@ -41,7 +41,7 @@ class BursaryTile extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        bursary.name,
+                        bursary.title,
                         style: const TextStyle(
                           fontSize: 17,
                           fontWeight: FontWeight.bold,
