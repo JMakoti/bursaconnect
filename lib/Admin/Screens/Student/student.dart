@@ -81,7 +81,7 @@ class _StudentState extends State<Student> {
                               size: 14,
                             ),
                           ),
-                          title: Text(applications.email),
+                          title: Text(applications.fullname),
                           subtitle: Wrap(
                             spacing: 5,
                             children: [

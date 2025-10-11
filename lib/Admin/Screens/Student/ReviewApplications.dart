@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:bursaconnect/Admin/Providers/provider.dart';
+import 'package:provider/provider.dart';
 class Reviewapplications extends StatefulWidget {
   const Reviewapplications({super.key});
 
@@ -8,7 +10,18 @@ class Reviewapplications extends StatefulWidget {
 
 class _ReviewapplicationsState extends State<Reviewapplications> {
   @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      final provider = Provider.of<AllApplicants>(context, listen: false);
+      provider.listenToAppliedStudents();
+    });
+  }
+  @override
   Widget build(BuildContext context) {
+    final provider = Provider.of<AllApplicants>(context);
+    final all_applicants = provider.allapplicants;
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: true,
@@ -43,192 +56,81 @@ class _ReviewapplicationsState extends State<Reviewapplications> {
                 ),
               ),
               SizedBox(height: 10),
-              Card(
-                color: Color(0xFFF9FAFB),
-                child:Padding(
-                  padding: const EdgeInsets.all(15.0),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      ListTile(
-                        leading: Container(
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(10),
-                              color: Colors.grey.shade200
-                          ),
-                          width: 30,
-                          height: 30,
-                          child: Icon(
-                            Icons.person,
-                            size: 14,
-                          ),
-                        ),
-                        title: Text("John Maina"),
-                        subtitle: Wrap(
-                          spacing: 5,
-                          children: [
-                            Text("Status:"),
-                            Container(
-                              padding:
-                              const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+              ListView.builder(
+                shrinkWrap: true,
+                itemCount: all_applicants.length,
+                itemBuilder:(context,index) {
+                  final applications = all_applicants[index];
+                  return Card(
+                    color: Color(0xFFF9FAFB),
+                    child: Padding(
+                      padding: const EdgeInsets.all(15.0),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          ListTile(
+                            leading: Container(
                               decoration: BoxDecoration(
-                                color: Colors.orangeAccent,
-                                borderRadius: BorderRadius.circular(8),
+                                  borderRadius: BorderRadius.circular(10),
+                                  color: Colors.grey.shade200
                               ),
-                              child: const Text(
-                                "Pending",
-                                style: TextStyle(color: Colors.white, fontSize: 12),
+                              width: 30,
+                              height: 30,
+                              child: Icon(
+                                Icons.person,
+                                size: 14,
                               ),
-
-                            )
-                          ],
-                        ),
-                        trailing:  GestureDetector(
-                          onTap: (){
-                            Navigator.pushNamed(context,"/acceptreject");
-                          },
-                          child: Container(
-                            padding:
-                            const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
-                            decoration: BoxDecoration(
-                              color: Colors.blueAccent,
-                              borderRadius: BorderRadius.circular(8),
                             ),
-                            child: const Text(
-                              "Review",
-                              style: TextStyle(color: Colors.white, fontSize: 12),
-                            ),
+                            title: Text(applications.fullname),
+                            subtitle: Wrap(
+                              spacing: 5,
+                              children: [
+                                Text("Status:"),
+                                Container(
+                                  padding:
+                                  const EdgeInsets.symmetric(
+                                      horizontal: 8, vertical: 4),
+                                  decoration: BoxDecoration(
+                                    color: Colors.orangeAccent,
+                                    borderRadius: BorderRadius.circular(8),
+                                  ),
+                                  child: const Text(
+                                    "Pending",
+                                    style: TextStyle(
+                                        color: Colors.white, fontSize: 12),
+                                  ),
 
-                          ),
-                        ),
-                      )
-                    ],
-                  ),
-                ),
+                                )
+                              ],
+                            ),
+                            trailing: GestureDetector(
+                              onTap: () {
+                                Navigator.pushNamed(context, "/acceptreject");
+                              },
+                              child: Container(
+                                padding:
+                                const EdgeInsets.symmetric(
+                                    horizontal: 8, vertical: 8),
+                                decoration: BoxDecoration(
+                                  color: Colors.blueAccent,
+                                  borderRadius: BorderRadius.circular(8),
+                                ),
+                                child: const Text(
+                                  "Review",
+                                  style: TextStyle(
+                                      color: Colors.white, fontSize: 12),
+                                ),
+
+                              ),
+                            ),
+                          )
+                        ],
+                      ),
+                    ),
+                  );
+                }
               ),
-              SizedBox(height: 10),
-              Card(
-                color: Color(0xFFF9FAFB),
-                child:Padding(
-                  padding: const EdgeInsets.all(15.0),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      ListTile(
-                        leading: Container(
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(10),
-                              color: Colors.grey.shade200
-                          ),
-                          width: 30,
-                          height: 30,
-                          child: Icon(
-                            Icons.person,
-                            size: 14,
-                          ),
-                        ),
-                        title: Text("John Maina"),
-                        subtitle: Wrap(
-                          spacing: 5,
-                          children: [
-                            Text("Status:"),
-                            Container(
-                              padding:
-                              const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-                              decoration: BoxDecoration(
-                                color: Colors.orangeAccent,
-                                borderRadius: BorderRadius.circular(8),
-                              ),
-                              child: const Text(
-                                "Pending",
-                                style: TextStyle(color: Colors.white, fontSize: 12),
-                              ),
 
-                            )
-                          ],
-                        ),
-                        trailing:  Container(
-                          padding:
-                          const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
-                          decoration: BoxDecoration(
-                            color: Colors.blueAccent,
-                            borderRadius: BorderRadius.circular(8),
-                          ),
-                          child: const Text(
-                            "Review",
-                            style: TextStyle(color: Colors.white, fontSize: 12),
-                          ),
-
-                        ),
-                      )
-                    ],
-                  ),
-                ),
-              ),
-              SizedBox(height: 10),
-              Card(
-                color: Color(0xFFF9FAFB),
-                child:Padding(
-                  padding: const EdgeInsets.all(15.0),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      ListTile(
-                        leading: Container(
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(10),
-                              color: Colors.grey.shade200
-                          ),
-                          width: 30,
-                          height: 30,
-                          child: Icon(
-                            Icons.person,
-                            size: 14,
-                          ),
-                        ),
-                        title: Text("John Maina"),
-                        subtitle: Wrap(
-                          spacing: 5,
-                          children: [
-                            Text("Status:"),
-                            Container(
-                              padding:
-                              const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-                              decoration: BoxDecoration(
-                                color: Colors.orangeAccent,
-                                borderRadius: BorderRadius.circular(8),
-                              ),
-                              child: const Text(
-                                "Pending",
-                                style: TextStyle(color: Colors.white, fontSize: 12),
-                              ),
-
-                            )
-                          ],
-                        ),
-                        trailing:  GestureDetector(
-                          onTap: (){
-                            Navigator.pushNamed(context,"/acceptreject");
-                          },
-                          child: Container(
-                            padding:
-                            const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
-                            decoration: BoxDecoration(
-                              color: Colors.blueAccent,
-                              borderRadius: BorderRadius.circular(8),
-                            ),
-                            child: const Text(
-                              "Review",
-                              style: TextStyle(color: Colors.white, fontSize: 12),
-                            ),
-
-                          ),
-                        ),
-                      )
-                    ],
-                  ),
-                ),
-              )
             ],
           ),
         ),
