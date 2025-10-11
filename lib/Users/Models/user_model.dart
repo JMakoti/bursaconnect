@@ -1,13 +1,13 @@
 class AppUser {
   final String id;
-  final String name;
+  final String fullname;
   final String email;
   final String? phoneNumber;
   final List<String>? appliedBursaries;
 
   AppUser({
     required this.id,
-    required this.name,
+    required this.fullname,
     required this.email,
     this.phoneNumber,
     this.appliedBursaries,
@@ -16,7 +16,7 @@ class AppUser {
   factory AppUser.fromJson(Map<String, dynamic> json, String id) {
     return AppUser(
       id: id,
-      name: json['name'] ?? '',
+      fullname: json['fullname'] ?? '',
       email: json['email'] ?? '',
       phoneNumber: json['phoneNumber'],
       appliedBursaries:
@@ -26,7 +26,7 @@ class AppUser {
 
   Map<String, dynamic> toJson() {
     return {
-      'name': name,
+      'fullname': fullname,
       'email': email,
       'phoneNumber': phoneNumber,
       'appliedBursaries': appliedBursaries,
