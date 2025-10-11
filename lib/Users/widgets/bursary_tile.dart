@@ -3,19 +3,18 @@ import '../../core/colors/colors.dart';
 import '../Models/bursary.dart';
 import 'action_btn.dart';
 import 'container.dart';
+import 'package:bursaconnect/Users/Services/application_service.dart';
 
 class BursaryTile extends StatelessWidget {
   final Bursary bursary;
   final VoidCallback onTap;
 
-  const BursaryTile({
-    super.key,
-    required this.bursary,
-    required this.onTap,
-  });
+  const BursaryTile({super.key, required this.bursary, required this.onTap});
 
   @override
   Widget build(BuildContext context) {
+    final appService = ApplicationService();
+
     return GestureDetector(
       onTap: onTap,
       child: ContainerInfoCard(
@@ -109,14 +108,28 @@ class BursaryTile extends StatelessWidget {
                 ),
                 ActionButton(
                   text: 'Apply Now',
-                  onPressed: () {
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(
-                        content: Text('Redirecting to ${bursary.website}'),
-                        backgroundColor: AppColors.primary,
-                      ),
-                    );
+                  onPressed: () async {
+                    try {
+                      await appService.applyForBursary(bursary.id);
+
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          content: Text(
+                            'You have successfully applied for ${bursary.title}',
+                          ),
+                          backgroundColor: Colors.green,
+                        ),
+                      );
+                    } catch (e) {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          content: Text('Error: ${e.toString()}'),
+                          backgroundColor: Colors.red,
+                        ),
+                      );
+                    }
                   },
+
                   bgColor: Colors.white,
                   fgColor: AppColors.accent,
                   // borderColor: AppColors.accent,
