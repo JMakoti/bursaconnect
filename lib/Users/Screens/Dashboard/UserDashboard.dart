@@ -3,6 +3,9 @@ import 'package:flutter/material.dart';
 import '../Explore/bursary_listing.dart';
 import '../../Screens/Activity/applied_bursary_listing.dart';
 import '../Profile/profile.dart';
+import '../../Models/user_model.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class UserDashboard extends StatefulWidget {
   const UserDashboard({super.key});
@@ -13,23 +16,24 @@ class UserDashboard extends StatefulWidget {
 
 class _UserDashboardState extends State<UserDashboard> {
   int _selectedIndex = 0;
+  AppUser? appUser;
 
-  final Map<String, dynamic> _studentInfo = {
-    'name': 'John Kimani',
-    'studentId': 'STU2024/001234',
-    'institution': 'University of Nairobi',
-    'course': 'Bachelor of Science in Computer Science',
-    'year': '3rd Year',
-    'email': 'john.kimani@student.uonbi.ac.ke',
-  };
+  // final Map<String, dynamic> _studentInfo = {
+  //   'name': 'John Kimani',
+  //   'studentId': 'STU2024/001234',
+  //   'institution': 'University of Nairobi',
+  //   'course': 'Bachelor of Science in Computer Science',
+  //   'year': '3rd Year',
+  //   'email': 'john.kimani@student.uonbi.ac.ke',
+  // };
 
-  final Map<String, dynamic> _bursaryStatus = {
-    'status': 'Approved',
-    'amount': 85000,
-    'semester': 'Semester 2, 2024/2025',
-    'disbursementDate': 'Nov 15, 2024',
-    'remainingBalance': 42500,
-  };
+  // final Map<String, dynamic> _bursaryStatus = {
+  //   'status': 'Approved',
+  //   'amount': 85000,
+  //   'semester': 'Semester 2, 2024/2025',
+  //   'disbursementDate': 'Nov 15, 2024',
+  //   'remainingBalance': 42500,
+  // };
 
   // final List<Map<String, dynamic>> _documents = [
   //   {
@@ -53,7 +57,38 @@ class _UserDashboardState extends State<UserDashboard> {
   // ];
 
   @override
+  void initState() {
+    super.initState();
+    // student = mockStudent;
+    _fetchUserData();
+  }
+
+  Future<void> _fetchUserData() async {
+    try {
+      final user = FirebaseAuth.instance.currentUser;
+      if (user != null) {
+        final docSnapshot = await FirebaseFirestore.instance
+            .collection('users')
+            .doc(user.uid)
+            .get();
+
+        if (docSnapshot.exists) {
+          final data = docSnapshot.data()!;
+          setState(() {
+            appUser = AppUser.fromJson(data, user.uid);
+          });
+        }
+      }
+    } catch (e) {
+      debugPrint("Error fetching user data: $e");
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
+    if (appUser == null) {
+      return const Scaffold(body: Center(child: CircularProgressIndicator()));
+    }
     return Scaffold(body: _buildBody(), bottomNavigationBar: _buildBottomNav());
   }
 
@@ -78,7 +113,7 @@ class _UserDashboardState extends State<UserDashboard> {
         children: [
           _buildWelcomeCard(),
           const SizedBox(height: 20),
-          _buildBursaryStatusCard(),
+          // _buildBursaryStatusCard(),
           const SizedBox(height: 20),
           _buildQuickActions(),
           const SizedBox(height: 20),
@@ -89,6 +124,9 @@ class _UserDashboardState extends State<UserDashboard> {
   }
 
   Widget _buildWelcomeCard() {
+    final name = appUser?.fullname ?? 'Student';
+    final email = appUser?.email ?? 'student@gmail.com';
+
     return Container(
       padding: const EdgeInsets.all(20),
       decoration: BoxDecoration(
@@ -113,7 +151,7 @@ class _UserDashboardState extends State<UserDashboard> {
           ),
           const SizedBox(height: 4),
           Text(
-            _studentInfo['name'].split(' ')[0],
+            name.split(' ')[0],
             style: const TextStyle(
               color: AppColors.background,
               fontSize: 24,
@@ -123,11 +161,11 @@ class _UserDashboardState extends State<UserDashboard> {
           const SizedBox(height: 16),
           Row(
             children: [
-              const Icon(Icons.school, color: AppColors.background, size: 18),
+              const Icon(Icons.email, color: AppColors.background, size: 18),
               const SizedBox(width: 8),
               Expanded(
                 child: Text(
-                  _studentInfo['institution'],
+                  email,
                   style: const TextStyle(
                     color: AppColors.background,
                     fontSize: 13,
@@ -136,159 +174,159 @@ class _UserDashboardState extends State<UserDashboard> {
               ),
             ],
           ),
-          const SizedBox(height: 8),
-          Row(
-            children: [
-              const Icon(Icons.book, color: AppColors.background, size: 18),
-              const SizedBox(width: 8),
-              Expanded(
-                child: Text(
-                  '${_studentInfo['course']} • ${_studentInfo['year']}',
-                  style: const TextStyle(
-                    color: AppColors.background,
-                    fontSize: 13,
-                  ),
-                ),
-              ),
-            ],
-          ),
+          // const SizedBox(height: 8),
+          // Row(
+          //   children: [
+          //     const Icon(Icons.book, color: AppColors.background, size: 18),
+          //     const SizedBox(width: 8),
+          //     Expanded(
+          //       child: Text(
+          //         '${_studentInfo['course']} • ${_studentInfo['year']}',
+          //         style: const TextStyle(
+          //           color: AppColors.background,
+          //           fontSize: 13,
+          //         ),
+          //       ),
+          //     ),
+          //   ],
+          // ),
         ],
       ),
     );
   }
 
-  Widget _buildBursaryStatusCard() {
-    final status = _bursaryStatus['status'];
-    final statusColor = status == 'Approved'
-        ? AppColors.success
-        : status == 'Pending'
-        ? AppColors.secondaryText
-        : AppColors.error;
+  // Widget _buildBursaryStatusCard() {
+  //   final status = _bursaryStatus['status'];
+  //   final statusColor = status == 'Approved'
+  //       ? AppColors.success
+  //       : status == 'Pending'
+  //       ? AppColors.secondaryText
+  //       : AppColors.error;
 
-    return Container(
-      padding: const EdgeInsets.all(20),
-      decoration: BoxDecoration(
-        color: AppColors.background,
-        borderRadius: BorderRadius.circular(16),
-        boxShadow: [
-          BoxShadow(
-            color: AppColors.secondaryText.withValues(alpha: 0.3),
-            blurRadius: 10,
-            offset: const Offset(0, 4),
-          ),
-        ],
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              const Text(
-                'Bursary Status',
-                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-              ),
-              Container(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 12,
-                  vertical: 6,
-                ),
-                decoration: BoxDecoration(
-                  color: statusColor.withValues(alpha: 0.1),
-                  borderRadius: BorderRadius.circular(20),
-                ),
-                child: Row(
-                  children: [
-                    Icon(Icons.check_circle, color: statusColor, size: 16),
-                    const SizedBox(width: 4),
-                    Text(
-                      status,
-                      style: TextStyle(
-                        color: statusColor,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 13,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ],
-          ),
-          const SizedBox(height: 20),
-          Row(
-            children: [
-              Expanded(
-                child: _buildInfoColumn(
-                  'Total Award',
-                  'KES ${_bursaryStatus['amount'].toStringAsFixed(0)}',
-                  Icons.account_balance_wallet,
-                ),
-              ),
-              Container(
-                height: 50,
-                width: 1,
-                color: AppColors.secondaryText.withValues(alpha: 0.3),
-              ),
-              Expanded(
-                child: _buildInfoColumn(
-                  'Balance',
-                  'KES ${_bursaryStatus['remainingBalance'].toStringAsFixed(0)}',
-                  Icons.savings,
-                ),
-              ),
-            ],
-          ),
-          const SizedBox(height: 16),
-          const Divider(),
-          const SizedBox(height: 16),
-          _buildInfoRow(
-            Icons.calendar_today,
-            'Semester',
-            _bursaryStatus['semester'],
-          ),
-          const SizedBox(height: 12),
-          _buildInfoRow(
-            Icons.payment,
-            'Next Disbursement',
-            _bursaryStatus['disbursementDate'],
-          ),
-        ],
-      ),
-    );
-  }
+  //   return Container(
+  //     padding: const EdgeInsets.all(20),
+  //     decoration: BoxDecoration(
+  //       color: AppColors.background,
+  //       borderRadius: BorderRadius.circular(16),
+  //       boxShadow: [
+  //         BoxShadow(
+  //           color: AppColors.secondaryText.withValues(alpha: 0.3),
+  //           blurRadius: 10,
+  //           offset: const Offset(0, 4),
+  //         ),
+  //       ],
+  //     ),
+  //     child: Column(
+  //       crossAxisAlignment: CrossAxisAlignment.start,
+  //       children: [
+  //         Row(
+  //           mainAxisAlignment: MainAxisAlignment.spaceBetween,
+  //           children: [
+  //             const Text(
+  //               'Bursary Status',
+  //               style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+  //             ),
+  //             Container(
+  //               padding: const EdgeInsets.symmetric(
+  //                 horizontal: 12,
+  //                 vertical: 6,
+  //               ),
+  //               decoration: BoxDecoration(
+  //                 color: statusColor.withValues(alpha: 0.1),
+  //                 borderRadius: BorderRadius.circular(20),
+  //               ),
+  //               child: Row(
+  //                 children: [
+  //                   Icon(Icons.check_circle, color: statusColor, size: 16),
+  //                   const SizedBox(width: 4),
+  //                   Text(
+  //                     status,
+  //                     style: TextStyle(
+  //                       color: statusColor,
+  //                       fontWeight: FontWeight.bold,
+  //                       fontSize: 13,
+  //                     ),
+  //                   ),
+  //                 ],
+  //               ),
+  //             ),
+  //           ],
+  //         ),
+  //         const SizedBox(height: 20),
+  //         Row(
+  //           children: [
+  //             Expanded(
+  //               child: _buildInfoColumn(
+  //                 'Total Award',
+  //                 'KES ${_bursaryStatus['amount'].toStringAsFixed(0)}',
+  //                 Icons.account_balance_wallet,
+  //               ),
+  //             ),
+  //             Container(
+  //               height: 50,
+  //               width: 1,
+  //               color: AppColors.secondaryText.withValues(alpha: 0.3),
+  //             ),
+  //             Expanded(
+  //               child: _buildInfoColumn(
+  //                 'Balance',
+  //                 'KES ${_bursaryStatus['remainingBalance'].toStringAsFixed(0)}',
+  //                 Icons.savings,
+  //               ),
+  //             ),
+  //           ],
+  //         ),
+  //         const SizedBox(height: 16),
+  //         const Divider(),
+  //         const SizedBox(height: 16),
+  //         _buildInfoRow(
+  //           Icons.calendar_today,
+  //           'Semester',
+  //           _bursaryStatus['semester'],
+  //         ),
+  //         const SizedBox(height: 12),
+  //         _buildInfoRow(
+  //           Icons.payment,
+  //           'Next Disbursement',
+  //           _bursaryStatus['disbursementDate'],
+  //         ),
+  //       ],
+  //     ),
+  //   );
+  // }
 
-  Widget _buildInfoColumn(String label, String value, IconData icon) {
-    return Column(
-      children: [
-        Icon(icon, color: AppColors.primary, size: 28),
-        const SizedBox(height: 8),
-        Text(label, style: TextStyle(fontSize: 12, color: Colors.grey[600])),
-        const SizedBox(height: 4),
-        Text(
-          value,
-          style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-        ),
-      ],
-    );
-  }
+  // Widget _buildInfoColumn(String label, String value, IconData icon) {
+  //   return Column(
+  //     children: [
+  //       Icon(icon, color: AppColors.primary, size: 28),
+  //       const SizedBox(height: 8),
+  //       Text(label, style: TextStyle(fontSize: 12, color: Colors.grey[600])),
+  //       const SizedBox(height: 4),
+  //       Text(
+  //         value,
+  //         style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+  //       ),
+  //     ],
+  //   );
+  // }
 
-  Widget _buildInfoRow(IconData icon, String label, String value) {
-    return Row(
-      children: [
-        Icon(icon, size: 20, color: AppColors.secondaryText),
-        const SizedBox(width: 12),
-        Text(
-          label,
-          style: TextStyle(fontSize: 14, color: AppColors.secondaryText),
-        ),
-        const Spacer(),
-        Text(
-          value,
-          style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w600),
-        ),
-      ],
-    );
-  }
+  // Widget _buildInfoRow(IconData icon, String label, String value) {
+  //   return Row(
+  //     children: [
+  //       Icon(icon, size: 20, color: AppColors.secondaryText),
+  //       const SizedBox(width: 12),
+  //       Text(
+  //         label,
+  //         style: TextStyle(fontSize: 14, color: AppColors.secondaryText),
+  //       ),
+  //       const Spacer(),
+  //       Text(
+  //         value,
+  //         style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w600),
+  //       ),
+  //     ],
+  //   );
+  // }
 
   Widget _buildQuickActions() {
     return Column(
